@@ -28,6 +28,15 @@ impl Renderer {
       textures: textures,
     })
   }
+  /// Add a new sampler.
+  /// Returns it's id.
+  pub fn add_sampler(
+    &mut self,
+    bytes: impl AsRef<[u8]>,
+    info: impl IntoIterator<Item = (impl ToString, Vec<[f32; 2]>)>,
+  ) -> Result<u16, GfxError> {
+    self.textures.add_sampler(&self.display, bytes, info)
+  }
   /// Execute the renderer.
   pub fn execute(&mut self, world: &mut World) -> Result<(), EngineError> {
     // Get a frame.
