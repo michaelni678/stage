@@ -1,0 +1,69 @@
+/// Defines a component.
+pub trait Component: Send + Sync {}
+
+/// Component variants.
+pub mod components {
+  use crate::{Point, Scale, Component, Mesh, Matrix4};
+
+  /// The position and scale of an entity.
+  pub struct Transform {
+    pub position: Point,
+    pub scale: Scale,
+  }
+
+  impl Transform {
+    /// Create a new transform component.
+    pub fn new(position: impl Into<Point>, scale: impl Into<Scale>) -> Self {
+      Self {
+        position: position.into(),
+        scale: scale.into(),
+      }
+    }
+  }
+
+  impl Component for Transform {}
+
+  /// Allows an entity to be rendered.
+  pub struct Renderable {
+    pub color: [f32; 4],
+    pub texture: String,
+    pub mesh: Mesh,
+  }
+
+  impl Renderable {
+    /// Create a new renderable component.
+    pub fn new(color: Option<[f32; 4]>, texture: Option<String>, mesh: Mesh) -> Self {
+      Self {
+        color: color.unwrap_or([1.0, 1.0, 1.0, 1.0]),
+        texture: texture.unwrap_or_default(),
+        mesh: mesh,
+      }
+    }
+  }
+
+  impl Component for Renderable {}
+
+  /// The camera component.
+  pub struct Camera {
+    pub offset: [f32; 2],
+  }
+
+  impl Camera {
+    /// Create a new camera.
+    pub fn new(offset: [f32; 2]) -> Self {
+      Self { offset: offset }
+    }
+    /// Get the projection matrix.
+    /// `fbd` is the frame buffer dimensions.
+    /// `position` is the position of the entity that holds the camera.
+    pub fn projection(&self, fbd: (u32, u32), position: [f32; 2]) -> [[f32; 4]; 4] {
+      let left = position[0] - (fbd.0 / 2) as f32 + self.offset[0];
+      let right = position[0] + (fbd.0 / 2) as f32 + self.offset[0];
+      let bottom = position[1] + (fbd.1 / 2) as f32 + self.offset[1];
+      let top = position[1] - (fbd.1 / 2) as f32 + self.offset[1];
+      Matrix4::new_orthographic(left, right, bottom, top, -1.0, 1.0).into()
+    }
+  }
+
+  impl Component for Camera {}
+}
