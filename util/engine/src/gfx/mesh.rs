@@ -24,9 +24,13 @@ impl Mesh {
   }
   /// Get the indices of the mesh.
   pub fn indices(&mut self) -> Box<[u32]> {
+    // If the vertices are dirty, the indices must be recalculated
+    // by triangulating the vertices.
     if self.vertices.is_dirty() {
+      // At the moment, vertices cannot be changed (otherwise this will
+      // panic).
       todo!();
-      self.vertices.clean();
+      // self.vertices.clean();
     }
     self.indices.clone()
   }

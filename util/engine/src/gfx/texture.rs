@@ -47,12 +47,13 @@ impl Textures {
       .ok_or_else(|| GfxError::TextureNotFound(texture.clone()))
   }
   /// Add a new sampler.
+  /// Returns it's id.
   pub fn add_sampler(
     &mut self,
     display: &Display,
     bytes: impl AsRef<[u8]>,
     info: impl IntoIterator<Item = (impl ToString, Vec<[f32; 2]>)>,
-  ) -> Result<(), GfxError> {
+  ) -> Result<u16, GfxError> {
     // Generate a sampler id.
     let sampler_id = self.next_sampler_id;
     self.next_sampler_id += 1;
@@ -75,7 +76,7 @@ impl Textures {
       };
       self.textures.insert(texture.to_string(), texture_info);
     }
-    Ok(())
+    Ok(sampler_id)
   }
   /// Get a sampler from it's id.
   #[inline]
