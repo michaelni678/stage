@@ -1,4 +1,6 @@
-use beyond_engine::{Camera, Mesh, Point, Renderable, Renderer, Transform, World, include_wrt_manifest};
+use beyond_engine::{
+  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World,
+};
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
   event::{Event, WindowEvent},
