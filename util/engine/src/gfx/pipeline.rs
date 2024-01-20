@@ -97,31 +97,34 @@ impl Pipeline {
     textures: &Textures,
     projection: [[f32; 4]; 4],
   ) -> Result<(), GfxError> {
-    // Write the vertex data to the vertex buffer.
-    self.vertex_buffer.write(&self.vertex_data);
-    // Slice the vertex buffer.
-    let vertex_buffer_slice = self
-      .vertex_buffer
-      .slice(0..self.len * self.vertices_per_mesh)
-      .ok_or(GfxError::BufferSlice)?;
-    // Get the sampler.
-    let sampler = textures.get_sampler(self.sampler_id)?;
-    // Draw the frame.
-    frame.draw(
-      vertex_buffer_slice,
-      &self.index_buffer,
-      &programs.basic,
-      &uniform! {
-        u_projection: projection,
-        u_sampler: sampler,
-      },
-      &DrawParameters {
-        blend: Blend::alpha_blending(),
-        ..Default::default()
-      },
-    )?;
-    // Reset the length.
-    self.len = 0;
+    // Check if there is anything to flush.
+    if self.len > 0 {
+      // Write the vertex data to the vertex buffer.
+      self.vertex_buffer.write(&self.vertex_data);
+      // Slice the vertex buffer.
+      let vertex_buffer_slice = self
+        .vertex_buffer
+        .slice(0..self.len * self.vertices_per_mesh)
+        .ok_or(GfxError::BufferSlice)?;
+      // Get the sampler.
+      let sampler = textures.get_sampler(self.sampler_id)?;
+      // Draw the frame.
+      frame.draw(
+        vertex_buffer_slice,
+        &self.index_buffer,
+        &programs.basic,
+        &uniform! {
+          u_projection: projection,
+          u_sampler: sampler,
+        },
+        &DrawParameters {
+          blend: Blend::alpha_blending(),
+          ..Default::default()
+        },
+      )?;
+      // Reset the length.
+      self.len = 0;
+    }
     Ok(())
   }
 }
