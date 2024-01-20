@@ -2,6 +2,7 @@ use crate::{
   Camera, Display, EngineError, GfxError, Pipeline, PipelineAttributes, Programs, Renderable,
   Textures, Transform, World,
 };
+use glium::Surface;
 use rustc_hash::FxHashMap;
 
 /// Renders to the display.
@@ -39,8 +40,9 @@ impl Renderer {
   }
   /// Execute the renderer.
   pub fn execute(&mut self, world: &mut World) -> Result<(), EngineError> {
-    // Get a frame.
+    // Get a frame and clear it.
     let mut frame = self.display.draw();
+    frame.clear_color(0.0, 0.0, 0.0, 0.0);
     // Catch the execution results. This is done because the frame MUST be
     // destroyed, even if the execution of the renderer fails.
     let result = (|| {

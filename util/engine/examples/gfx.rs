@@ -54,7 +54,8 @@ fn main() {
     .unwrap();
   // Create the world.
   let mut world = World::new();
-  // Spawn an entity.
+  // Spawn the active entity.
+  // Solid red renderable.
   let entity = world.spawn_entity((
     Transform::new([0.0, 0.0], [128.0, 128.0]),
     Renderable::new(
@@ -74,6 +75,7 @@ fn main() {
   ));
   world.actives.set_camera(entity);
   // Spawn more entities.
+  // Standalone texture renderable.
   world.spawn_entity((
     Transform::new([-320.0, 128.0], [128.0, 128.0]),
     Renderable::new(
@@ -90,6 +92,7 @@ fn main() {
       ),
     ),
   ));
+  // Full atlas texture renderable.
   world.spawn_entity((
     Transform::new([-192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
@@ -106,6 +109,7 @@ fn main() {
       ),
     ),
   ));
+  // Atlas subtexture renderable.
   world.spawn_entity((
     Transform::new([-64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
@@ -122,10 +126,11 @@ fn main() {
       ),
     ),
   ));
+  // Red-tinted atlas subtexture renderable.
   world.spawn_entity((
     Transform::new([64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
+      Some([1.0, 0.75, 0.75, 1.0]),
       Some(String::from("Atlas 1")),
       Mesh::new(
         vec![
@@ -138,10 +143,11 @@ fn main() {
       ),
     ),
   ));
+  // Semi-transparent atlas subtexture renderable.
   world.spawn_entity((
     Transform::new([192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
+      Some([1.0, 1.0, 1.0, 0.1]),
       Some(String::from("Atlas 2")),
       Mesh::new(
         vec![
@@ -154,8 +160,9 @@ fn main() {
       ),
     ),
   ));
+  // Small atlas subtexture renderable.
   world.spawn_entity((
-    Transform::new([320.0, 128.0], [128.0, 128.0]),
+    Transform::new([288.0, 96.0], [64.0, 64.0]),
     Renderable::new(
       None,
       Some(String::from("Atlas 3")),
