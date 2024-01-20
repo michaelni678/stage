@@ -1,4 +1,4 @@
-use crate::{Point, Flag};
+use crate::{Flag, Point};
 
 /// A mesh.
 pub struct Mesh {
@@ -15,7 +15,7 @@ impl Mesh {
     let vertices = vertices.into_boxed_slice();
     Self {
       vertices: Flag::new_clean(vertices),
-      indices: indices.into_boxed_slice().into(),
+      indices: indices.into_boxed_slice(),
     }
   }
   /// Get the indices of the mesh.

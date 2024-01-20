@@ -1,5 +1,8 @@
+use crate::{
+  Camera, Display, EngineError, GfxError, Pipeline, PipelineAttributes, Programs, Renderable,
+  Textures, Transform, World,
+};
 use rustc_hash::FxHashMap;
-use crate::{PipelineAttributes, Pipeline, Display, World, Transform, Renderable, GfxError, Textures, Programs, Camera, EngineError};
 
 /// Renders to the display.
 pub struct Renderer {
@@ -59,12 +62,12 @@ impl Renderer {
         };
         // Write to the pipeline.
         pipeline.write(
-          &mut frame, 
+          &mut frame,
           &self.programs,
-          &self.textures, 
+          &self.textures,
           &projection,
-          transform.position, 
-          transform.scale, 
+          transform.position,
+          transform.scale,
           renderable.color,
           texture_info,
           &renderable.mesh,

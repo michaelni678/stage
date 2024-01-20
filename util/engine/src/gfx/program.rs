@@ -1,5 +1,5 @@
-use glium::Program;
 use crate::{Display, GfxError};
+use glium::Program;
 
 /// A basic vertex shader.
 const BASIC_VS: &str = "

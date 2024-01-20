@@ -1,10 +1,10 @@
 use std::io::Cursor;
 
-use glium::{Texture2d, texture::RawImage2d};
+use crate::{Display, GfxError};
 use ahash::AHashMap;
+use glium::{texture::RawImage2d, Texture2d};
+use image::{ImageBuffer, ImageOutputFormat, Rgb};
 use rustc_hash::FxHashMap;
-use crate::{GfxError, Display};
-use image::{ImageBuffer, Rgb, ImageOutputFormat};
 
 /// Manages textures.
 pub struct Textures {
@@ -28,16 +28,11 @@ impl Textures {
     let mut cursor = Cursor::new(&mut bytes);
     image.write_to(&mut cursor, ImageOutputFormat::Png)?;
     textures.add_sampler(
-      display, 
-      bytes, 
+      display,
+      bytes,
       [(
-        String::default(), 
-        vec![
-          [0.0, 0.0],
-          [1.0, 0.0],
-          [1.0, 1.0],
-          [0.0, 1.0],
-        ],
+        String::default(),
+        vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]],
       )],
     )?;
     // Return the texture manager.
@@ -46,13 +41,16 @@ impl Textures {
   /// Get a texture's information.
   #[inline]
   pub fn get_texture_info(&self, texture: &String) -> Result<&TextureInfo, GfxError> {
-    self.textures.get(texture).ok_or_else(|| GfxError::TextureNotFound(texture.clone()))
+    self
+      .textures
+      .get(texture)
+      .ok_or_else(|| GfxError::TextureNotFound(texture.clone()))
   }
   /// Add a new sampler.
   pub fn add_sampler(
-    &mut self, 
+    &mut self,
     display: &Display,
-    bytes: impl AsRef<[u8]>, 
+    bytes: impl AsRef<[u8]>,
     info: impl IntoIterator<Item = (impl ToString, Vec<[f32; 2]>)>,
   ) -> Result<(), GfxError> {
     // Generate a sampler id.

@@ -1,13 +1,33 @@
-mod gfx;
+#![allow(clippy::redundant_field_names)]
+#![allow(clippy::too_many_arguments)]
+
 mod ecs;
+mod error;
+mod gfx;
 mod math;
 mod misc;
-mod error;
 
-pub use gfx::{renderer::Renderer, pipeline::{Pipeline, PipelineAttributes}, error::GfxError, mesh::Mesh, vertex::Vertex, texture::{Textures, TextureInfo}, program::Programs};
-pub use ecs::{world::World, error::EcsError, entity::Entity, component::{Component, components::{Transform, Renderable, Camera}}, actives::Actives};
-pub use math::{Point, Scale, Matrix4};
-pub use misc::flag::Flag;
+pub use ecs::{
+  actives::Actives,
+  component::{
+    components::{Camera, Renderable, Transform},
+    Component,
+  },
+  entity::Entity,
+  error::EcsError,
+  world::World,
+};
 pub use error::EngineError;
+pub use gfx::{
+  error::GfxError,
+  mesh::Mesh,
+  pipeline::{Pipeline, PipelineAttributes},
+  program::Programs,
+  renderer::Renderer,
+  texture::{TextureInfo, Textures},
+  vertex::Vertex,
+};
+pub use math::{Matrix4, Point, Scale};
+pub use misc::flag::Flag;
 
 pub type Display = glium::Display<glium::glutin::surface::WindowSurface>;
