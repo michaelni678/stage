@@ -1,6 +1,8 @@
-use thiserror::Error;
-use glium::{vertex, index, ProgramCreationError, SwapBuffersError, DrawError, texture::TextureCreationError};
+use glium::{
+  index, texture::TextureCreationError, vertex, DrawError, ProgramCreationError, SwapBuffersError,
+};
 use image::ImageError;
+use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum GfxError {

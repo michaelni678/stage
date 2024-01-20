@@ -1,5 +1,7 @@
-use glium::{VertexBuffer, IndexBuffer, index::PrimitiveType, Frame, Surface, DrawParameters, uniform};
-use crate::{Display, GfxError, Vertex, Point, Scale, TextureInfo, Textures, Mesh, Programs};
+use crate::{Display, GfxError, Mesh, Point, Programs, Scale, TextureInfo, Textures, Vertex};
+use glium::{
+  index::PrimitiveType, uniform, DrawParameters, Frame, IndexBuffer, Surface, VertexBuffer,
+};
 
 /// The default flush threshold for a pipeline.
 const DEFAULT_FLUSH_THRESHOLD: usize = 64;
@@ -18,8 +20,8 @@ pub struct Pipeline {
 impl Pipeline {
   /// Create a new pipeline.
   pub fn new(
-    display: &Display, 
-    attributes: &PipelineAttributes, 
+    display: &Display,
+    attributes: &PipelineAttributes,
     flush_threshold: Option<usize>,
   ) -> Result<Self, GfxError> {
     // Get the flush threshold.
@@ -57,13 +59,13 @@ impl Pipeline {
   }
   /// Write to the pipeline.
   pub fn write(
-    &mut self, 
-    frame: &mut Frame, 
+    &mut self,
+    frame: &mut Frame,
     programs: &Programs,
     textures: &Textures,
     projection: &[[f32; 4]; 4],
-    position: Point, 
-    scale: Scale, 
+    position: Point,
+    scale: Scale,
     color: [f32; 4],
     texture_info: &TextureInfo,
     mesh: &Mesh,
@@ -89,8 +91,8 @@ impl Pipeline {
   }
   /// Flush the pipeline.
   pub fn flush(
-    &mut self, 
-    frame: &mut Frame, 
+    &mut self,
+    frame: &mut Frame,
     programs: &Programs,
     textures: &Textures,
     projection: [[f32; 4]; 4],
@@ -98,14 +100,17 @@ impl Pipeline {
     // Write the vertex data to the vertex buffer.
     self.vertex_buffer.write(&self.vertex_data);
     // Slice the vertex buffer.
-    let vertex_buffer_slice = self.vertex_buffer.slice(0..self.len * self.vertices_per_mesh).ok_or(GfxError::BufferSlice)?;
+    let vertex_buffer_slice = self
+      .vertex_buffer
+      .slice(0..self.len * self.vertices_per_mesh)
+      .ok_or(GfxError::BufferSlice)?;
     // Get the sampler.
     let sampler = textures.get_sampler(self.sampler_id)?;
     // Draw the frame.
     frame.draw(
-      vertex_buffer_slice, 
-      &self.index_buffer, 
-      &programs.basic, 
+      vertex_buffer_slice,
+      &self.index_buffer,
+      &programs.basic,
       &uniform! {
         u_projection: projection,
         u_sampler: sampler,

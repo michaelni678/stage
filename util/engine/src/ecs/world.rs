@@ -1,4 +1,4 @@
-use crate::{Entity, EcsError, Actives};
+use crate::{Actives, EcsError, Entity};
 use hecs::{DynamicBundle, Query, QueryBorrow, QueryMut, QueryOne, QueryOneError};
 
 /// Manages entities and their components.

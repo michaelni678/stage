@@ -1,5 +1,5 @@
+use crate::{EcsError, GfxError};
 use thiserror::Error;
-use crate::{GfxError, EcsError};
 
 /// Engine errors.
 #[derive(Error, Debug)]

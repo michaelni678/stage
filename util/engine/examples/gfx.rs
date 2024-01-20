@@ -1,6 +1,9 @@
-use beyond_engine::{Renderer, World, Transform, Renderable, Mesh, Point, Camera};
+use beyond_engine::{Camera, Mesh, Point, Renderable, Renderer, Transform, World};
 use glium::backend::glutin::SimpleWindowBuilder;
-use winit::{event_loop::EventLoop, event::{Event, WindowEvent}};
+use winit::{
+  event::{Event, WindowEvent},
+  event_loop::EventLoop,
+};
 
 fn main() {
   // Application setup.
@@ -15,10 +18,19 @@ fn main() {
   // Spawn an entity.
   let entity = world.spawn_entity((
     Transform::new([0.0, 0.0], [128.0, 128.0]),
-    Renderable::new(Some([1.0, 0.0, 0.0, 1.0]), None, Mesh::new(
-      vec![Point::new(-0.5, -0.5), Point::new(0.5, -0.5), Point::new(0.5, 0.5), Point::new(-0.5, 0.5)],
-      vec![0, 2, 1, 0, 3, 2],
-    )),
+    Renderable::new(
+      Some([1.0, 0.0, 0.0, 1.0]),
+      None,
+      Mesh::new(
+        vec![
+          Point::new(-0.5, -0.5),
+          Point::new(0.5, -0.5),
+          Point::new(0.5, 0.5),
+          Point::new(-0.5, 0.5),
+        ],
+        vec![0, 2, 1, 0, 3, 2],
+      ),
+    ),
     Camera::new([0.0, 0.0]),
   ));
   world.actives.set_camera(entity);
