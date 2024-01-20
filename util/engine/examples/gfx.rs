@@ -14,16 +14,45 @@ fn main() {
   // Create the renderer.
   let mut renderer = Renderer::new(display).unwrap();
   // Add the samplers.
-  renderer.add_sampler(include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/examples/standalone.png")), [
-    ("Standalone", vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]),
-  ]).unwrap();
-  renderer.add_sampler(include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/examples/atlas.png")), [
-    ("Atlas Full", vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]),
-    ("Atlas 0", vec![[0.0, 0.0], [0.5, 0.0], [0.5, 0.5], [0.0, 0.5]]),
-    ("Atlas 1", vec![[0.0, 0.5], [0.5, 0.5], [0.5, 1.0], [0.0, 1.0]]),
-    ("Atlas 2", vec![[0.5, 0.0], [1.0, 0.0], [1.0, 0.5], [0.5, 0.5]]),
-    ("Atlas 3", vec![[0.5, 0.5], [1.0, 0.5], [1.0, 1.0], [0.5, 1.0]]),
-  ]).unwrap();
+  renderer
+    .add_sampler(
+      include_bytes!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/examples/standalone.png"
+      )),
+      [(
+        "Standalone",
+        vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]],
+      )],
+    )
+    .unwrap();
+  renderer
+    .add_sampler(
+      include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/examples/atlas.png")),
+      [
+        (
+          "Atlas Full",
+          vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]],
+        ),
+        (
+          "Atlas 0",
+          vec![[0.0, 0.0], [0.5, 0.0], [0.5, 0.5], [0.0, 0.5]],
+        ),
+        (
+          "Atlas 1",
+          vec![[0.0, 0.5], [0.5, 0.5], [0.5, 1.0], [0.0, 1.0]],
+        ),
+        (
+          "Atlas 2",
+          vec![[0.5, 0.0], [1.0, 0.0], [1.0, 0.5], [0.5, 0.5]],
+        ),
+        (
+          "Atlas 3",
+          vec![[0.5, 0.5], [1.0, 0.5], [1.0, 1.0], [0.5, 1.0]],
+        ),
+      ],
+    )
+    .unwrap();
   // Create the world.
   let mut world = World::new();
   // Spawn an entity.
