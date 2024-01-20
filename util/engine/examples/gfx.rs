@@ -1,4 +1,4 @@
-use beyond_engine::{Camera, Mesh, Point, Renderable, Renderer, Transform, World};
+use beyond_engine::{Camera, Mesh, Point, Renderable, Renderer, Transform, World, include_wrt_manifest};
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
   event::{Event, WindowEvent},
@@ -16,10 +16,7 @@ fn main() {
   // Add the samplers.
   renderer
     .add_sampler(
-      include_bytes!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/examples/standalone.png"
-      )),
+      include_wrt_manifest!("/examples/standalone.png"),
       [(
         "Standalone",
         vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]],
@@ -28,7 +25,7 @@ fn main() {
     .unwrap();
   renderer
     .add_sampler(
-      include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/examples/atlas.png")),
+      include_wrt_manifest!("/examples/atlas.png"),
       [
         (
           "Atlas Full",
