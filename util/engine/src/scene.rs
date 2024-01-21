@@ -1,15 +1,27 @@
+use crate::{CommandQueue, Context, EngineError, TypeIdHasher};
 use std::{any::TypeId, collections::HashMap, hash::BuildHasherDefault};
-use crate::{TypeIdHasher, Context, EngineError, CommandQueue};
 use thiserror::Error;
 
 /// Defines a scene.
 pub trait Scene: 'static {
   /// Invoked when the scene is loaded.
-  fn load(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn load(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
   /// Invoked every frame.
-  fn frame(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn frame(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
   /// Invoked when the scene is unloaded.
-  fn unload(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn unload(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
 }
 
 /// Manages scenes.
@@ -26,7 +38,7 @@ impl Default for Scenes {
     let dummy_loaded = TypeId::of::<()>();
     // Return the scene manager.
     Self {
-      loaded: dummy_loaded, 
+      loaded: dummy_loaded,
       scenes: HashMap::default(),
     }
   }
@@ -45,13 +57,18 @@ impl Scenes {
   }
   /// Get the loaded scene.
   pub fn loaded(&mut self) -> Result<&mut dyn Scene, SceneError> {
-    self.scenes
+    self
+      .scenes
       .get_mut(&self.loaded)
       .map(|loaded| loaded.as_mut())
       .ok_or(SceneError::SceneNotFound)
   }
   /// Load a scene, unloading the previous scene.
-  pub fn load<S: Scene>(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError> {
+  pub fn load<S: Scene>(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError> {
     // Get the previous scene, if there is one.
     if let Ok(prev_scene) = self.loaded() {
       // Unload the previous scene.
@@ -59,10 +76,7 @@ impl Scenes {
     }
     // Get the new scene.
     let tid = TypeId::of::<S>();
-    let new_scene = self
-      .scenes
-      .get_mut(&tid)
-      .ok_or(SceneError::SceneNotFound)?;
+    let new_scene = self.scenes.get_mut(&tid).ok_or(SceneError::SceneNotFound)?;
     // Load the new scene.
     new_scene.load(command_queue, context)?;
     // Set the `loaded` field to the new scene's type id.

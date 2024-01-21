@@ -1,5 +1,5 @@
 use beyond_engine::{
-  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, Texture, Color,
+  include_wrt_manifest, Camera, Color, Mesh, Point, Renderable, Renderer, Texture, Transform, World,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{

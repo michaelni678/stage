@@ -1,4 +1,4 @@
-use crate::{Command, EngineError, Context, Scenes};
+use crate::{Command, Context, EngineError, Scenes};
 use std::collections::VecDeque;
 
 /// A queue of commands.

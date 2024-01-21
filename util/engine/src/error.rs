@@ -1,4 +1,4 @@
-use crate::{EcsError, GfxError, AppError, SceneError};
+use crate::{AppError, EcsError, GfxError, SceneError};
 use thiserror::Error;
 
 /// Engine errors.

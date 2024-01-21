@@ -1,4 +1,4 @@
-use crate::{Renderer, World, Display, EngineError};
+use crate::{Display, EngineError, Renderer, World};
 
 /// Holds a majority of the application's data.
 pub struct Context {

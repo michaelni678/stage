@@ -1,4 +1,8 @@
-use beyond_engine::{App, AppSetupHandler, WindowBuilder, Scenes, AppEventHandler, EngineError, AppWindowEventHandler, ELWT, Scene, Context, CommandQueue, LoadScene, Transform, Renderable, Color, Texture, Mesh, Point, Camera};
+use beyond_engine::{
+  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Color, CommandQueue,
+  Context, EngineError, LoadScene, Mesh, Point, Renderable, Scene, Scenes, Texture, Transform,
+  WindowBuilder, ELWT,
+};
 
 /// An example application.
 pub struct ExampleApp;
@@ -15,17 +19,30 @@ impl AppSetupHandler for ExampleApp {
 }
 
 impl AppEventHandler for ExampleApp {
-  fn init(&mut self, command_queue: &mut CommandQueue, _context: &mut Context) -> Result<(), EngineError> {
+  fn init(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    _context: &mut Context,
+  ) -> Result<(), EngineError> {
     command_queue.enqueue(LoadScene::<ExampleScene>);
-    Ok(()) 
+    Ok(())
   }
-  fn exit(&mut self, _command_queue: &mut CommandQueue, _context: &mut Context) -> Result<(), EngineError> {
+  fn exit(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    _context: &mut Context,
+  ) -> Result<(), EngineError> {
     Ok(())
   }
 }
 
 impl AppWindowEventHandler for ExampleApp {
-  fn close_request(&mut self, elwt: &ELWT, _command_queue: &mut CommandQueue, _context: &mut Context) -> Result<(), EngineError> {
+  fn close_request(
+    &mut self,
+    elwt: &ELWT,
+    _command_queue: &mut CommandQueue,
+    _context: &mut Context,
+  ) -> Result<(), EngineError> {
     elwt.exit();
     Ok(())
   }
@@ -35,7 +52,11 @@ impl AppWindowEventHandler for ExampleApp {
 pub struct ExampleScene;
 
 impl Scene for ExampleScene {
-  fn load(&mut self, _command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError> {
+  fn load(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError> {
     // Spawn the active entity.
     let entity = context.world.spawn_entity((
       Transform::new([0.0, 0.0], [128.0, 128.0]),
@@ -57,10 +78,18 @@ impl Scene for ExampleScene {
     context.world.actives.set_camera(entity);
     Ok(())
   }
-  fn frame(&mut self, _command_queue: &mut CommandQueue, _context: &mut Context) -> Result<(), EngineError> {
+  fn frame(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    _context: &mut Context,
+  ) -> Result<(), EngineError> {
     Ok(())
   }
-  fn unload(&mut self, _command_queue: &mut CommandQueue, _context: &mut Context) -> Result<(), EngineError> {
+  fn unload(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    _context: &mut Context,
+  ) -> Result<(), EngineError> {
     Ok(())
   }
 }

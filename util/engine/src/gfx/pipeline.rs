@@ -1,6 +1,6 @@
 use crate::{Display, GfxError, Mesh, Point, Programs, Scale, TextureInfo, Textures, Vertex};
 use glium::{
-  index::PrimitiveType, uniform, DrawParameters, Frame, IndexBuffer, Surface, VertexBuffer, Blend,
+  index::PrimitiveType, uniform, Blend, DrawParameters, Frame, IndexBuffer, Surface, VertexBuffer,
 };
 
 /// The default flush threshold for a pipeline.

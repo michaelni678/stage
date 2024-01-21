@@ -3,7 +3,7 @@ pub trait Component: Send + Sync {}
 
 /// Component variants.
 pub mod components {
-  use crate::{Component, Matrix4, Mesh, Point, Scale, Texture, Color};
+  use crate::{Color, Component, Matrix4, Mesh, Point, Scale, Texture};
 
   /// The position and scale of an entity.
   pub struct Transform {

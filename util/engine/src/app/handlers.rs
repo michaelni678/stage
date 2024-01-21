@@ -1,18 +1,21 @@
+use crate::{AppError, CommandQueue, Context, EngineError, Scenes, WindowBuilder, ELWT};
 use glium::backend::glutin::SimpleWindowBuilder;
-use winit::{event::{Event, WindowEvent, StartCause}, event_loop::EventLoop};
-use crate::{WindowBuilder, Scenes, EngineError, ELWT, AppError, CommandQueue, Context};
+use winit::{
+  event::{Event, StartCause, WindowEvent},
+  event_loop::EventLoop,
+};
 
 /// Defines an application.
 pub trait App: AppSetupHandler + AppEventHandler + AppWindowEventHandler {
   fn run(mut self: Box<Self>) -> Result<(), EngineError> {
     // Create the event loop.
     let event_loop = EventLoop::new().map_err(AppError::from)?;
-     // Create the window and display.
+    // Create the window and display.
     let (window, display) = {
-    let window_builder = WindowBuilder::new();
-    SimpleWindowBuilder::new()
-      .set_window_builder(Self::window(window_builder))
-      .build(&event_loop)
+      let window_builder = WindowBuilder::new();
+      SimpleWindowBuilder::new()
+        .set_window_builder(Self::window(window_builder))
+        .build(&event_loop)
     };
     // Create the command queue.
     let mut command_queue = CommandQueue::new();
@@ -43,7 +46,9 @@ pub trait App: AppSetupHandler + AppEventHandler + AppWindowEventHandler {
               // Match the window event.
               match event {
                 // Close request event.
-                WindowEvent::CloseRequested => self.close_request(elwt, &mut command_queue, &mut context)?,
+                WindowEvent::CloseRequested => {
+                  self.close_request(elwt, &mut command_queue, &mut context)?
+                },
                 // Redraw request.
                 WindowEvent::RedrawRequested => {
                   // Execute the command queue.
@@ -68,7 +73,8 @@ pub trait App: AppSetupHandler + AppEventHandler + AppWindowEventHandler {
         })() {
           eprintln!("{}", error);
         }
-      }).map_err(AppError::from)?;
+      })
+      .map_err(AppError::from)?;
     Ok(())
   }
 }
@@ -84,13 +90,26 @@ pub trait AppSetupHandler {
 /// Handles application events.
 pub trait AppEventHandler {
   /// Handle the application init event, sent immediately after run is called.
-  fn init(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn init(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
   /// Handle the application exit event, sent when event polling is finished.
-  fn exit(&mut self, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn exit(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
 }
 
 /// Handles application window events.
 pub trait AppWindowEventHandler {
   /// Handle the close request event.
-  fn close_request(&mut self, elwt: &ELWT, command_queue: &mut CommandQueue, context: &mut Context) -> Result<(), EngineError>;
+  fn close_request(
+    &mut self,
+    elwt: &ELWT,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+  ) -> Result<(), EngineError>;
 }
