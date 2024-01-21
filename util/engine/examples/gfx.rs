@@ -1,5 +1,5 @@
 use beyond_engine::{
-  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, TextureKind, Color,
+  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, Texture, Color,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
@@ -60,7 +60,7 @@ fn main() {
     Transform::new([0.0, 0.0], [128.0, 128.0]),
     Renderable::new(
       Color::rgb(1.0, 0.0, 0.0),
-      TextureKind::none(),
+      Texture::none(),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -80,7 +80,7 @@ fn main() {
     Transform::new([-320.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::none(),
-      TextureKind::regular("Standalone"),
+      Texture::regular("Standalone"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -97,7 +97,7 @@ fn main() {
     Transform::new([-192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::none(),
-      TextureKind::regular("Atlas Full"),
+      Texture::regular("Atlas Full"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -114,7 +114,7 @@ fn main() {
     Transform::new([-64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::none(),
-      TextureKind::regular("Atlas 0"),
+      Texture::regular("Atlas 0"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -131,7 +131,7 @@ fn main() {
     Transform::new([64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::rgba(1.0, 0.75, 0.75, 1.0),
-      TextureKind::regular("Atlas 1"),
+      Texture::regular("Atlas 1"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -148,7 +148,7 @@ fn main() {
     Transform::new([192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::alpha(0.1),
-      TextureKind::regular("Atlas 2"),
+      Texture::regular("Atlas 2"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -165,7 +165,7 @@ fn main() {
     Transform::new([288.0, 96.0], [64.0, 64.0]),
     Renderable::new(
       Color::none(),
-      TextureKind::regular("Atlas 3"),
+      Texture::regular("Atlas 3"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),

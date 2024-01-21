@@ -90,21 +90,21 @@ pub struct TextureInfo {
   pub texture_coords: Box<[[f32; 2]]>,
 }
 
-/// The kind of texture.
-pub enum TextureKind {
-  /// No texture. Equivalent to `TextureKind::Regular("")`.
+/// A texture.
+pub enum Texture {
+  /// No texture. Equivalent to `Texture::Regular("")`.
   None,
   /// A regular texture.
   Regular(String),
 }
 
-impl Default for TextureKind {
+impl Default for Texture {
   fn default() -> Self {
     Self::None
   }
 }
 
-impl TextureKind {
+impl Texture {
   /// Create a new blank texture.
   pub fn none() -> Self {
     Self::default()
@@ -118,8 +118,8 @@ impl TextureKind {
     /// The blank texture, which is just an empty string.
     static BLANK_TEXTURE: String = String::new();
     match self {
-      TextureKind::None => &BLANK_TEXTURE,
-      TextureKind::Regular(texture) => texture,
+      Texture::None => &BLANK_TEXTURE,
+      Texture::Regular(texture) => texture,
     }
   }
 }

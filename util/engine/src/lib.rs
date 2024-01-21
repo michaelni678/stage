@@ -24,7 +24,7 @@ pub use gfx::{
   pipeline::{Pipeline, PipelineAttributes},
   program::Programs,
   renderer::Renderer,
-  texture::{TextureInfo, Textures, TextureKind},
+  texture::{TextureInfo, Textures, Texture},
   vertex::Vertex,
   color::Color,
 };

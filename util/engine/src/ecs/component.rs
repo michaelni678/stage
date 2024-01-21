@@ -3,7 +3,7 @@ pub trait Component: Send + Sync {}
 
 /// Component variants.
 pub mod components {
-  use crate::{Component, Matrix4, Mesh, Point, Scale, TextureKind, Color};
+  use crate::{Component, Matrix4, Mesh, Point, Scale, Texture, Color};
 
   /// The position and scale of an entity.
   pub struct Transform {
@@ -26,13 +26,13 @@ pub mod components {
   /// Allows an entity to be rendered.
   pub struct Renderable {
     pub color: Color,
-    pub texture: TextureKind,
+    pub texture: Texture,
     pub mesh: Mesh,
   }
 
   impl Renderable {
     /// Create a new renderable component.
-    pub fn new(color: Color, texture: TextureKind, mesh: Mesh) -> Self {
+    pub fn new(color: Color, texture: Texture, mesh: Mesh) -> Self {
       Self {
         color: color,
         texture: texture,
