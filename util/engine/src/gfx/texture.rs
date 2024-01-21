@@ -1,5 +1,4 @@
 use std::io::Cursor;
-
 use crate::{Display, GfxError};
 use ahash::AHashMap;
 use glium::{texture::RawImage2d, Texture2d};
@@ -89,4 +88,38 @@ impl Textures {
 pub struct TextureInfo {
   pub sampler_id: u16,
   pub texture_coords: Box<[[f32; 2]]>,
+}
+
+/// A texture.
+pub enum Texture {
+  /// No texture. Equivalent to `Texture::Regular("")`.
+  None,
+  /// A regular texture.
+  Regular(String),
+}
+
+impl Default for Texture {
+  fn default() -> Self {
+    Self::None
+  }
+}
+
+impl Texture {
+  /// Create a new blank texture.
+  pub fn none() -> Self {
+    Self::default()
+  }
+  /// Create a new regular texture.
+  pub fn regular(texture: impl ToString) -> Self {
+    Self::Regular(texture.to_string())
+  }
+  /// Get the texture.
+  pub fn get(&mut self) -> &String {
+    /// The blank texture, which is just an empty string.
+    static BLANK_TEXTURE: String = String::new();
+    match self {
+      Texture::None => &BLANK_TEXTURE,
+      Texture::Regular(texture) => texture,
+    }
+  }
 }

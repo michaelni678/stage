@@ -24,8 +24,9 @@ pub use gfx::{
   pipeline::{Pipeline, PipelineAttributes},
   program::Programs,
   renderer::Renderer,
-  texture::{TextureInfo, Textures},
+  texture::{TextureInfo, Textures, Texture},
   vertex::Vertex,
+  color::Color,
 };
 pub use math::{Matrix4, Point, Scale};
 pub use misc::flag::Flag;

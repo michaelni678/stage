@@ -58,7 +58,7 @@ impl Renderer {
       let query = world.standard_query::<(&Transform, &mut Renderable)>();
       for (_, (transform, renderable)) in query {
         // Get the texture information of the renderable.
-        let texture_info = self.textures.get_texture_info(&renderable.texture)?;
+        let texture_info = self.textures.get_texture_info(&renderable.texture.get())?;
         // Determine the pipeline attributes required to render the renderable.
         let pipeline_attrs = PipelineAttributes {
           index_pattern: renderable.mesh.indices(),
@@ -79,7 +79,7 @@ impl Renderer {
           &projection,
           transform.position,
           transform.scale,
-          renderable.color,
+          renderable.color.into(),
           texture_info,
           &renderable.mesh,
         )?;

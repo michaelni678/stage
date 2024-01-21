@@ -1,5 +1,5 @@
 use beyond_engine::{
-  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World,
+  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, Texture, Color,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
@@ -59,8 +59,8 @@ fn main() {
   let entity = world.spawn_entity((
     Transform::new([0.0, 0.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 0.0, 0.0, 1.0]),
-      None,
+      Color::rgb(1.0, 0.0, 0.0),
+      Texture::none(),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -79,8 +79,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([-320.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
-      Some(String::from("Standalone")),
+      Color::none(),
+      Texture::regular("Standalone"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -96,8 +96,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([-192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
-      Some(String::from("Atlas Full")),
+      Color::none(),
+      Texture::regular("Atlas Full"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -113,8 +113,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([-64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
-      Some(String::from("Atlas 0")),
+      Color::none(),
+      Texture::regular("Atlas 0"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -130,8 +130,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 0.75, 0.75, 1.0]),
-      Some(String::from("Atlas 1")),
+      Color::rgba(1.0, 0.75, 0.75, 1.0),
+      Texture::regular("Atlas 1"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -147,8 +147,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 1.0, 1.0, 0.1]),
-      Some(String::from("Atlas 2")),
+      Color::alpha(0.1),
+      Texture::regular("Atlas 2"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),
@@ -164,8 +164,8 @@ fn main() {
   world.spawn_entity((
     Transform::new([288.0, 96.0], [64.0, 64.0]),
     Renderable::new(
-      None,
-      Some(String::from("Atlas 3")),
+      Color::none(),
+      Texture::regular("Atlas 3"),
       Mesh::new(
         vec![
           Point::new(-0.5, -0.5),

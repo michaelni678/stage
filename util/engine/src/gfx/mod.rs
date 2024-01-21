@@ -5,3 +5,4 @@ pub mod program;
 pub mod renderer;
 pub mod texture;
 pub mod vertex;
+pub mod color;
