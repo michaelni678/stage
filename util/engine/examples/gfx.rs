@@ -1,5 +1,5 @@
 use beyond_engine::{
-  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, TextureKind,
+  include_wrt_manifest, Camera, Mesh, Point, Renderable, Renderer, Transform, World, TextureKind, Color,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
@@ -59,7 +59,7 @@ fn main() {
   let entity = world.spawn_entity((
     Transform::new([0.0, 0.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 0.0, 0.0, 1.0]),
+      Color::rgb(1.0, 0.0, 0.0),
       TextureKind::none(),
       Mesh::new(
         vec![
@@ -79,7 +79,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([-320.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
+      Color::none(),
       TextureKind::regular("Standalone"),
       Mesh::new(
         vec![
@@ -96,7 +96,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([-192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
+      Color::none(),
       TextureKind::regular("Atlas Full"),
       Mesh::new(
         vec![
@@ -113,7 +113,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([-64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      None,
+      Color::none(),
       TextureKind::regular("Atlas 0"),
       Mesh::new(
         vec![
@@ -130,7 +130,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 0.75, 0.75, 1.0]),
+      Color::rgba(1.0, 0.75, 0.75, 1.0),
       TextureKind::regular("Atlas 1"),
       Mesh::new(
         vec![
@@ -147,7 +147,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
-      Some([1.0, 1.0, 1.0, 0.1]),
+      Color::alpha(0.1),
       TextureKind::regular("Atlas 2"),
       Mesh::new(
         vec![
@@ -164,7 +164,7 @@ fn main() {
   world.spawn_entity((
     Transform::new([288.0, 96.0], [64.0, 64.0]),
     Renderable::new(
-      None,
+      Color::none(),
       TextureKind::regular("Atlas 3"),
       Mesh::new(
         vec![

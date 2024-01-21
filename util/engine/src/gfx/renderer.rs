@@ -79,7 +79,7 @@ impl Renderer {
           &projection,
           transform.position,
           transform.scale,
-          renderable.color,
+          renderable.color.into(),
           texture_info,
           &renderable.mesh,
         )?;

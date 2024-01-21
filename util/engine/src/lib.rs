@@ -26,6 +26,7 @@ pub use gfx::{
   renderer::Renderer,
   texture::{TextureInfo, Textures, TextureKind},
   vertex::Vertex,
+  color::Color,
 };
 pub use math::{Matrix4, Point, Scale};
 pub use misc::flag::Flag;
