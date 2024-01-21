@@ -96,11 +96,6 @@ pub enum TextureKind {
   None,
   /// A regular texture.
   Regular(String),
-  /// An animation.
-  Animation {
-    frames: Box<[String]>,
-    current_frame: usize,
-  }
 }
 
 impl Default for TextureKind {
@@ -118,13 +113,6 @@ impl TextureKind {
   pub fn regular(texture: impl ToString) -> Self {
     Self::Regular(texture.to_string())
   }
-  /// Create an animation texture.
-  pub fn animation(frames: impl IntoIterator<Item = impl ToString>) -> Self {
-    Self::Animation {
-      frames: frames.into_iter().map(|frame| frame.to_string()).collect(),
-      current_frame: 0,
-    }
-  }
   /// Get the texture.
   pub fn get(&mut self) -> &String {
     /// The blank texture, which is just an empty string.
@@ -132,10 +120,6 @@ impl TextureKind {
     match self {
       TextureKind::None => &BLANK_TEXTURE,
       TextureKind::Regular(texture) => texture,
-      TextureKind::Animation { frames, current_frame } => {
-        // Return the frame.
-        &frames[*current_frame]
-      },
     }
   }
 }
