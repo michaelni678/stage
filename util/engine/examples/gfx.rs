@@ -177,6 +177,23 @@ fn main() {
       ),
     ),
   ));
+  // Animated renderable.
+  world.spawn_entity((
+    Transform::new([-192.0, 128.0], [128.0, 128.0]),
+    Renderable::new(
+      Color::none(),
+      TextureKind::animation(["Standalone", "Atlas 0"]),
+      Mesh::new(
+        vec![
+          Point::new(-0.5, -0.5),
+          Point::new(0.5, -0.5),
+          Point::new(0.5, 0.5),
+          Point::new(-0.5, 0.5),
+        ],
+        vec![0, 2, 1, 0, 3, 2],
+      ),
+    ),
+  ));
   // Run the event loop.
   event_loop
     .run(move |event, elwt| match event {

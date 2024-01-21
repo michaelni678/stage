@@ -1,4 +1,4 @@
-use std::{io::Cursor, time::Duration, ops::Deref};
+use std::io::Cursor;
 use crate::{Display, GfxError};
 use ahash::AHashMap;
 use glium::{texture::RawImage2d, Texture2d};
@@ -100,7 +100,6 @@ pub enum TextureKind {
   Animation {
     frames: Box<[String]>,
     current_frame: usize,
-    interval: Duration,
   }
 }
 
@@ -120,25 +119,23 @@ impl TextureKind {
     Self::Regular(texture.to_string())
   }
   /// Create an animation texture.
-  pub fn animation(frames: impl Into<Box<[String]>>, interval: Duration) -> Self {
+  pub fn animation(frames: impl IntoIterator<Item = impl ToString>) -> Self {
     Self::Animation {
-      frames: frames.into(),
+      frames: frames.into_iter().map(|frame| frame.to_string()).collect(),
       current_frame: 0,
-      interval: interval,
     }
   }
-}
-
-/// The blank texture, which is just an empty string.
-static BLANK_TEXTURE: String = String::new();
-
-impl Deref for TextureKind {
-  type Target = String;
-  fn deref(&self) -> &Self::Target {
+  /// Get the texture.
+  pub fn get(&mut self) -> &String {
+    /// The blank texture, which is just an empty string.
+    static BLANK_TEXTURE: String = String::new();
     match self {
       TextureKind::None => &BLANK_TEXTURE,
       TextureKind::Regular(texture) => texture,
-      TextureKind::Animation { frames, current_frame, .. } => &frames[*current_frame],
+      TextureKind::Animation { frames, current_frame } => {
+        // Return the frame.
+        &frames[*current_frame]
+      },
     }
   }
 }
