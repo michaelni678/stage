@@ -50,13 +50,8 @@ impl Color {
   }
 }
 
-impl Into<[f32; 4]> for Color {
-  fn into(self) -> [f32; 4] {
-    [
-      self.red,
-      self.green,
-      self.blue,
-      self.alpha,
-    ]
+impl From<Color> for [f32; 4] {
+  fn from(color: Color) -> Self {
+    [color.red, color.green, color.blue, color.alpha]
   }
 }

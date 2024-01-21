@@ -1,4 +1,4 @@
-use crate::{EcsError, GfxError};
+use crate::{AppError, EcsError, GfxError, SceneError};
 use thiserror::Error;
 
 /// Engine errors.
@@ -8,4 +8,8 @@ pub enum EngineError {
   Gfx(#[from] GfxError),
   #[error("{0}")]
   Ecs(#[from] EcsError),
+  #[error("{0}")]
+  App(#[from] AppError),
+  #[error("{0}")]
+  Scene(#[from] SceneError),
 }

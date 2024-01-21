@@ -136,6 +136,7 @@ name = "beyond_engine"
 version = "0.1.0"
 dependencies = [
  "ahash",
+ "ghost",
  "glium",
  "hecs",
  "image",
@@ -519,6 +520,17 @@ dependencies = [
  "cfg-if",
  "libc",
  "wasi",
+]
+
+[[package]]
+name = "ghost"
+version = "0.1.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0e085ded9f1267c32176b40921b9754c474f7dd96f7e808d4a982e48aa1e854"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.48",
 ]
 
 [[package]]
