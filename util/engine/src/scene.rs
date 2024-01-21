@@ -20,9 +20,8 @@ pub struct Scenes {
   scenes: HashMap<TypeId, Box<dyn Scene>, BuildHasherDefault<TypeIdHasher>>,
 }
 
-impl Scenes {
-  /// Create a new scene manager.
-  pub fn new() -> Self {
+impl Default for Scenes {
+  fn default() -> Self {
     // A dummy type id.
     let dummy_loaded = TypeId::of::<()>();
     // Return the scene manager.
@@ -30,6 +29,13 @@ impl Scenes {
       loaded: dummy_loaded, 
       scenes: HashMap::default(),
     }
+  }
+}
+
+impl Scenes {
+  /// Create a new scene manager.
+  pub fn new() -> Self {
+    Self::default()
   }
   /// Register a scene.
   pub fn register<S: Scene>(mut self, scene: S) -> Self {
