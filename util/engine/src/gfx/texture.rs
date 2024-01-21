@@ -1,5 +1,4 @@
-use std::io::Cursor;
-
+use std::{io::Cursor, time::Duration, ops::Deref};
 use crate::{Display, GfxError};
 use ahash::AHashMap;
 use glium::{texture::RawImage2d, Texture2d};
@@ -89,4 +88,57 @@ impl Textures {
 pub struct TextureInfo {
   pub sampler_id: u16,
   pub texture_coords: Box<[[f32; 2]]>,
+}
+
+/// The kind of texture.
+pub enum TextureKind {
+  /// No texture. Equivalent to `TextureKind::Regular("")`.
+  None,
+  /// A regular texture.
+  Regular(String),
+  /// An animation.
+  Animation {
+    frames: Box<[String]>,
+    current_frame: usize,
+    interval: Duration,
+  }
+}
+
+impl Default for TextureKind {
+  fn default() -> Self {
+    Self::None
+  }
+}
+
+impl TextureKind {
+  /// Create a new blank texture.
+  pub fn none() -> Self {
+    Self::default()
+  }
+  /// Create a new regular texture.
+  pub fn regular(texture: impl ToString) -> Self {
+    Self::Regular(texture.to_string())
+  }
+  /// Create an animation texture.
+  pub fn animation(frames: impl Into<Box<[String]>>, interval: Duration) -> Self {
+    Self::Animation {
+      frames: frames.into(),
+      current_frame: 0,
+      interval: interval,
+    }
+  }
+}
+
+/// The blank texture, which is just an empty string.
+static BLANK_TEXTURE: String = String::new();
+
+impl Deref for TextureKind {
+  type Target = String;
+  fn deref(&self) -> &Self::Target {
+    match self {
+      TextureKind::None => &BLANK_TEXTURE,
+      TextureKind::Regular(texture) => texture,
+      TextureKind::Animation { frames, current_frame, .. } => &frames[*current_frame],
+    }
+  }
 }
