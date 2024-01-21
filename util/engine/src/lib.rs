@@ -1,12 +1,17 @@
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::too_many_arguments)]
 
+mod app;
 mod ecs;
 mod error;
 mod gfx;
 mod math;
 mod misc;
+mod scene;
+mod cmd;
+mod ctx;
 
+/* Exports. */
 pub use ecs::{
   actives::Actives,
   component::{
@@ -29,6 +34,14 @@ pub use gfx::{
   color::Color,
 };
 pub use math::{Matrix4, Point, Scale};
-pub use misc::flag::Flag;
+pub use misc::{flag::Flag, hash::TypeIdHasher};
+pub use scene::{Scene, Scenes, SceneError};
+pub use app::{handlers::{App, AppSetupHandler, AppEventHandler, AppWindowEventHandler}, error::AppError};
+pub use cmd::{command::{Command, commands::LoadScene}, queue::CommandQueue};
+pub use ctx::Context;
 
+use winit::event_loop::EventLoopWindowTarget;
+/* Re-exports. */
+pub use winit::window::WindowBuilder;
+pub type ELWT = EventLoopWindowTarget<()>;
 pub type Display = glium::Display<glium::glutin::surface::WindowSurface>;
