@@ -8,10 +8,7 @@ impl Basics {
   // !TODO
   // The point is currently actually a small square instead of a circle.
   // Change to a circle mesh.
-  pub fn point(
-    position: impl Into<Point>,
-    color: Color,
-  ) -> (Transform, Renderable) {
+  pub fn point(position: impl Into<Point>, color: Color) -> (Transform, Renderable) {
     Basics::square(position, [8.0, 8.0], color, Texture::None)
   }
   /// A square.
@@ -32,7 +29,7 @@ impl Basics {
     );
     (
       Transform::new(position, scale),
-      Renderable::new(color, texture, mesh)
+      Renderable::new(color, texture, mesh),
     )
   }
 }

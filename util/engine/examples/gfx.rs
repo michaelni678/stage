@@ -1,6 +1,7 @@
 use beyond_engine::{
-  include_wrt_manifest, Renderer, World,
-  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Basics, Camera, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, Point, Renderable, Scene, Scenes, Texture, Transform, WindowBuilder, ELWT
+  include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Basics,
+  Camera, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, Point, Renderable, Renderer,
+  Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
 /// An example application.
@@ -26,7 +27,8 @@ impl AppEventHandler for ExampleApp {
     // Load the example scene.
     command_queue.enqueue(LoadScene::<ExampleScene>);
     // Add the samplers.
-    context.renderer
+    context
+      .renderer
       .add_sampler(
         include_wrt_manifest!("/examples/standalone.png"),
         [(
@@ -35,7 +37,8 @@ impl AppEventHandler for ExampleApp {
         )],
       )
       .unwrap();
-    context.renderer
+    context
+      .renderer
       .add_sampler(
         include_wrt_manifest!("/examples/atlas.png"),
         [

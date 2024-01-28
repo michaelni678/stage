@@ -62,7 +62,8 @@ impl Renderer {
         camera.projection(fbd, transform.position.into())
       };
       // Query the renderables.
-      let query = world.standard_query::<(&Transform, &mut Renderable)>()
+      let query = world
+        .standard_query::<(&Transform, &mut Renderable)>()
         .into_iter()
         .map(|(_, data)| data);
       let requests = self.render_requests.iter_mut().map(|(t, r)| (&*t, r));
