@@ -75,6 +75,29 @@ fn main() {
   ));
   world.actives.set_camera(entity);
   // Spawn more entities.
+  more_entities(&mut world);
+  // Run the event loop.
+  event_loop
+    .run(move |event, elwt| match event {
+      Event::AboutToWait => window.request_redraw(),
+      Event::WindowEvent { window_id, event } => {
+        assert_eq!(window.id(), window_id);
+        match event {
+          WindowEvent::RedrawRequested => {
+            requests(&mut renderer);
+            renderer.execute(&mut world).unwrap();
+          },
+          WindowEvent::CloseRequested => elwt.exit(),
+          _ => (),
+        }
+      },
+      _ => (),
+    })
+    .unwrap();
+}
+
+/// Spawn more entities.
+fn more_entities(world: &mut World) {
   // Standalone texture renderable.
   world.spawn_entity((
     Transform::new([-320.0, 128.0], [128.0, 128.0]),
@@ -126,9 +149,10 @@ fn main() {
       ),
     ),
   ));
+}
 
-  // Use render request instead of entity.
-
+/// Per-frame render requests.
+fn requests(renderer: &mut Renderer) {
   // Red-tinted atlas subtexture renderable.
   renderer.add_render_request((
     Transform::new([64.0, 128.0], [128.0, 128.0]),
@@ -180,21 +204,4 @@ fn main() {
       ),
     ),
   ));
-  // Run the event loop.
-  event_loop
-    .run(move |event, elwt| match event {
-      Event::AboutToWait => window.request_redraw(),
-      Event::WindowEvent { window_id, event } => {
-        assert_eq!(window.id(), window_id);
-        match event {
-          WindowEvent::RedrawRequested => {
-            renderer.execute(&mut world).unwrap();
-          },
-          WindowEvent::CloseRequested => elwt.exit(),
-          _ => (),
-        }
-      },
-      _ => (),
-    })
-    .unwrap();
 }

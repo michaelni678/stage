@@ -41,6 +41,7 @@ pub use gfx::{
   renderer::Renderer,
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
+  basics::Basics,
 };
 pub use math::{Matrix4, Point, Scale};
 pub use misc::{flag::Flag, hash::TypeIdHasher};

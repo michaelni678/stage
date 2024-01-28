@@ -1,7 +1,5 @@
 use beyond_engine::{
-  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Color, CommandQueue,
-  Context, EngineError, LoadScene, Mesh, Point, Renderable, Scene, Scenes, Texture, Transform,
-  WindowBuilder, ELWT,
+  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Basics, Camera, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, Point, Renderable, Scene, Scenes, Texture, Transform, WindowBuilder, ELWT
 };
 
 /// An example application.
@@ -81,8 +79,9 @@ impl Scene for ExampleScene {
   fn frame(
     &mut self,
     _command_queue: &mut CommandQueue,
-    _context: &mut Context,
+    context: &mut Context,
   ) -> Result<(), EngineError> {
+    context.renderer.add_render_request(Basics::point([0.0, 0.0], Color::blue()));
     Ok(())
   }
   fn unload(
