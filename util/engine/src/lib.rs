@@ -33,9 +33,9 @@ pub use ecs::{
 };
 pub use error::EngineError;
 pub use gfx::{
-  geometry::Geometry,
   color::Color,
   error::GfxError,
+  geometry::Geometry,
   mesh::Mesh,
   pipeline::{Pipeline, PipelineAttributes},
   program::Programs,

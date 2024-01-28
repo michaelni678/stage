@@ -1,6 +1,6 @@
-pub mod geometry;
 pub mod color;
 pub mod error;
+pub mod geometry;
 pub mod mesh;
 pub mod pipeline;
 pub mod program;
