@@ -1,4 +1,4 @@
-pub mod basics;
+pub mod geometry;
 pub mod color;
 pub mod error;
 pub mod mesh;
