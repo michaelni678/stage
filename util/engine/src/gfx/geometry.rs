@@ -1,15 +1,15 @@
 use crate::{Color, Mesh, Point, Renderable, Scale, Texture, Transform};
 
-/// Basic transforms and renderables.
-pub struct Basics;
+/// Geometry primitives for render requests.
+pub struct Geometry;
 
-impl Basics {
+impl Geometry {
   /// A point.
   // !TODO
   // The point is currently actually a small square instead of a circle.
   // Change to a circle mesh.
   pub fn point(position: impl Into<Point>, color: Color) -> (Transform, Renderable) {
-    Basics::square(position, [8.0, 8.0], color, Texture::None)
+    Geometry::square(position, [8.0, 8.0], color, Texture::None)
   }
   /// A square.
   pub fn square(
