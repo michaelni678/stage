@@ -33,6 +33,7 @@ pub use ecs::{
 };
 pub use error::EngineError;
 pub use gfx::{
+  basics::Basics,
   color::Color,
   error::GfxError,
   mesh::Mesh,

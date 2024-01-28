@@ -15,6 +15,8 @@ pub struct Renderer {
   programs: Programs,
   /// The texture manager.
   textures: Textures,
+  /// The render requests.
+  render_requests: Vec<(Transform, Renderable)>,
 }
 
 impl Renderer {
@@ -27,6 +29,7 @@ impl Renderer {
       pipelines: FxHashMap::default(),
       programs: programs,
       textures: textures,
+      render_requests: Vec::new(),
     })
   }
   /// Add a new sampler.
@@ -37,6 +40,10 @@ impl Renderer {
     info: impl IntoIterator<Item = (impl ToString, Vec<[f32; 2]>)>,
   ) -> Result<u16, GfxError> {
     self.textures.add_sampler(&self.display, bytes, info)
+  }
+  /// Add a new render request.
+  pub fn add_render_request(&mut self, request: (Transform, Renderable)) {
+    self.render_requests.push(request);
   }
   /// Execute the renderer.
   pub fn execute(&mut self, world: &mut World) -> Result<(), EngineError> {
@@ -55,8 +62,13 @@ impl Renderer {
         camera.projection(fbd, transform.position.into())
       };
       // Query the renderables.
-      let query = world.standard_query::<(&Transform, &mut Renderable)>();
-      for (_, (transform, renderable)) in query {
+      let query = world
+        .standard_query::<(&Transform, &mut Renderable)>()
+        .into_iter()
+        .map(|(_, data)| data);
+      let requests = self.render_requests.iter_mut().map(|(t, r)| (&*t, r));
+      let chain = query.into_iter().chain(requests);
+      for (transform, renderable) in chain {
         // Get the texture information of the renderable.
         let texture_info = self.textures.get_texture_info(renderable.texture.get())?;
         // Determine the pipeline attributes required to render the renderable.
@@ -90,6 +102,8 @@ impl Renderer {
       }
       Ok(())
     })();
+    // Clear the render requests.
+    self.render_requests.clear();
     // Finish the frame.
     frame.finish().map_err(GfxError::from)?;
     // Return the result of the execution.

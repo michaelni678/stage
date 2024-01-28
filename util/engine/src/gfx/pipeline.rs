@@ -12,6 +12,7 @@ pub struct Pipeline {
   vertex_buffer: VertexBuffer<Vertex>,
   index_buffer: IndexBuffer<u32>,
   vertices_per_mesh: usize,
+  indices_per_mesh: usize,
   len: usize,
   flush_threshold: usize,
   sampler_id: u16,
@@ -34,10 +35,10 @@ impl Pipeline {
       index_pattern.len()
     };
     // Generate the index data.
+    let indices_per_mesh = attributes.index_pattern.len();
     let index_data = {
-      let index_count = attributes.index_pattern.len();
       let mut repeated = attributes.index_pattern.repeat(flush_threshold);
-      let chunks = repeated.chunks_mut(index_count);
+      let chunks = repeated.chunks_mut(indices_per_mesh);
       for (i, chunk) in chunks.enumerate() {
         for index in chunk {
           *index += (vertices_per_mesh * i) as u32;
@@ -52,6 +53,7 @@ impl Pipeline {
       vertex_buffer: VertexBuffer::empty_dynamic(display, buffer_len)?,
       index_buffer: IndexBuffer::immutable(display, PrimitiveType::TrianglesList, &index_data)?,
       vertices_per_mesh: vertices_per_mesh,
+      indices_per_mesh: indices_per_mesh,
       len: 0,
       flush_threshold: flush_threshold,
       sampler_id: attributes.sampler_id,
@@ -78,7 +80,7 @@ impl Pipeline {
     for (i, vertex) in mesh.vertices().iter().enumerate() {
       // Calculate vertex information.
       let vertex = *vertex;
-      let vertex_position = position + vertex * scale;
+      let vertex_position = position + vertex.scale(scale);
       // Cache the vertex to write to.
       let vertex = &mut self.vertex_data[self.len * self.vertices_per_mesh + i];
       // Write to the cached vertex.
@@ -101,17 +103,21 @@ impl Pipeline {
     if self.len > 0 {
       // Write the vertex data to the vertex buffer.
       self.vertex_buffer.write(&self.vertex_data);
-      // Slice the vertex buffer.
+      // Slice the buffers.
       let vertex_buffer_slice = self
         .vertex_buffer
         .slice(0..self.len * self.vertices_per_mesh)
+        .ok_or(GfxError::BufferSlice)?;
+      let index_buffer_slice = self
+        .index_buffer
+        .slice(0..self.len * self.indices_per_mesh)
         .ok_or(GfxError::BufferSlice)?;
       // Get the sampler.
       let sampler = textures.get_sampler(self.sampler_id)?;
       // Draw the frame.
       frame.draw(
         vertex_buffer_slice,
-        &self.index_buffer,
+        index_buffer_slice,
         &programs.basic,
         &uniform! {
           u_projection: projection,
