@@ -126,8 +126,11 @@ fn main() {
       ),
     ),
   ));
+
+  // Use render request instead of entity.
+
   // Red-tinted atlas subtexture renderable.
-  world.spawn_entity((
+  renderer.add_render_request((
     Transform::new([64.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::rgba(1.0, 0.75, 0.75, 1.0),
@@ -144,7 +147,7 @@ fn main() {
     ),
   ));
   // Semi-transparent atlas subtexture renderable.
-  world.spawn_entity((
+  renderer.add_render_request((
     Transform::new([192.0, 128.0], [128.0, 128.0]),
     Renderable::new(
       Color::alpha(0.1),
@@ -161,7 +164,7 @@ fn main() {
     ),
   ));
   // Small atlas subtexture renderable.
-  world.spawn_entity((
+  renderer.add_render_request((
     Transform::new([288.0, 96.0], [64.0, 64.0]),
     Renderable::new(
       Color::none(),
