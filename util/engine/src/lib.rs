@@ -47,8 +47,7 @@ pub use math::{Matrix4, Point, Scale};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
 pub use scene::{Scene, SceneError, Scenes};
 
-use winit::event_loop::EventLoopWindowTarget;
 /* Re-exports. */
 pub use winit::window::WindowBuilder;
-pub type ELWT = EventLoopWindowTarget<()>;
+pub type ELWT = winit::event_loop::EventLoopWindowTarget<()>;
 pub type Display = glium::Display<glium::glutin::surface::WindowSurface>;
