@@ -3,8 +3,8 @@ use std::ops::{Add, Mul};
 /// An X and Y in 2-D space.
 #[derive(Copy, Clone, Debug, Default)]
 pub struct XY {
-  x: f32,
-  y: f32,
+  pub x: f32,
+  pub y: f32,
 }
 
 impl XY {
