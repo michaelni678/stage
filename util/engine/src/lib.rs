@@ -43,7 +43,7 @@ pub use gfx::{
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
 };
-pub use math::{Matrix4, Point, Scale, XY};
+pub use math::{Matrix4, Point, Scale};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
 pub use scene::{Scene, SceneError, Scenes};
 

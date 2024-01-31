@@ -77,10 +77,12 @@ impl Pipeline {
       self.flush(frame, programs, textures, *projection)?;
     }
     // Loop through the vertices.
-    for (i, vertex) in mesh.vertices().iter().enumerate() {
+    for (i, &vertex) in mesh.vertices().iter().enumerate() {
       // Calculate vertex information.
-      let vertex = *vertex;
-      let vertex_position = position + vertex.scale(scale);
+      let vertex_position = {
+        let sv = scale * vertex;
+        Point::new(position.x + sv.x, position.y + sv.y)
+      };
       // Cache the vertex to write to.
       let vertex = &mut self.vertex_data[self.len * self.vertices_per_mesh + i];
       // Write to the cached vertex.
