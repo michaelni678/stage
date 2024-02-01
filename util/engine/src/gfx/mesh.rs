@@ -27,11 +27,24 @@ impl Mesh {
     // If the vertices are dirty, the indices must be recalculated
     // by triangulating the vertices.
     if self.vertices.is_dirty() {
+      // TODO:
       // At the moment, vertices cannot be changed (otherwise this will
       // panic).
       todo!();
       // self.vertices.clean();
     }
     self.indices.clone()
+  }
+  /// A unit square mesh.
+  pub fn square() -> Self {
+    Self::new(
+      vec![
+        Point::new(0.0, 0.0),
+        Point::new(1.0, 0.0),
+        Point::new(1.0, 1.0),
+        Point::new(0.0, 1.0),
+      ],
+      vec![0, 2, 1, 0, 3, 2],
+    )
   }
 }

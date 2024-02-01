@@ -35,11 +35,11 @@ pub use error::EngineError;
 pub use gfx::{
   color::Color,
   error::GfxError,
-  geometry::Geometry,
   mesh::Mesh,
   pipeline::{Pipeline, PipelineAttributes},
   program::Programs,
   renderer::Renderer,
+  request::RenderRequest,
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
 };

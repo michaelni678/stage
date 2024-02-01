@@ -1,9 +1,9 @@
 pub mod color;
 pub mod error;
-pub mod geometry;
 pub mod mesh;
 pub mod pipeline;
 pub mod program;
 pub mod renderer;
+pub mod request;
 pub mod texture;
 pub mod vertex;
