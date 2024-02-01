@@ -34,4 +34,16 @@ impl Mesh {
     }
     self.indices.clone()
   }
+  /// A unit square mesh.
+  pub fn square() -> Self {
+    Self::new(
+      vec![
+        Point::new(0.0, 0.0),
+        Point::new(1.0, 0.0),
+        Point::new(1.0, 1.0),
+        Point::new(0.0, 1.0),
+      ],
+      vec![0, 2, 1, 0, 3, 2],
+    )
+  }
 }

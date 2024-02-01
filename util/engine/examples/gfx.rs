@@ -146,15 +146,7 @@ fn more_entities(world: &mut World) {
     Renderable::new(
       Color::none(),
       Texture::regular("Standalone"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
   // Full atlas texture renderable.
@@ -163,15 +155,7 @@ fn more_entities(world: &mut World) {
     Renderable::new(
       Color::none(),
       Texture::regular("Atlas Full"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
   // Atlas subtexture renderable.
@@ -180,15 +164,7 @@ fn more_entities(world: &mut World) {
     Renderable::new(
       Color::none(),
       Texture::regular("Atlas 0"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
 }
@@ -201,15 +177,7 @@ fn requests(renderer: &mut Renderer) {
     Renderable::new(
       Color::rgba(1.0, 0.75, 0.75, 1.0),
       Texture::regular("Atlas 1"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
   // Semi-transparent atlas subtexture renderable.
@@ -218,15 +186,7 @@ fn requests(renderer: &mut Renderer) {
     Renderable::new(
       Color::alpha(0.1),
       Texture::regular("Atlas 2"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
   // Small atlas subtexture renderable.
@@ -235,15 +195,7 @@ fn requests(renderer: &mut Renderer) {
     Renderable::new(
       Color::none(),
       Texture::regular("Atlas 3"),
-      Mesh::new(
-        vec![
-          Point::new(0.0, 0.0),
-          Point::new(1.0, 0.0),
-          Point::new(1.0, 1.0),
-          Point::new(0.0, 1.0),
-        ],
-        vec![0, 2, 1, 0, 3, 2],
-      ),
+      Mesh::square(),
     ),
   ));
   // A blue point.
