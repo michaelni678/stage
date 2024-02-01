@@ -1,6 +1,6 @@
 use beyond_engine::{
   include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
-  Color, CommandQueue, Context, EngineError, Geometry, LoadScene, Mesh, Point, Renderable,
+  Color, CommandQueue, Context, EngineError, RenderRequest, LoadScene, Mesh, Point, Renderable,
   Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
@@ -106,10 +106,10 @@ impl Scene for ExampleScene {
         Texture::none(),
         Mesh::new(
           vec![
-            Point::new(-0.5, -0.5),
-            Point::new(0.5, -0.5),
-            Point::new(0.5, 0.5),
-            Point::new(-0.5, 0.5),
+            Point::new(0.0, 0.0),
+            Point::new(1.0, 0.0),
+            Point::new(1.0, 1.0),
+            Point::new(0.0, 1.0),
           ],
           vec![0, 2, 1, 0, 3, 2],
         ),
@@ -148,10 +148,10 @@ fn more_entities(world: &mut World) {
       Texture::regular("Standalone"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
@@ -165,10 +165,10 @@ fn more_entities(world: &mut World) {
       Texture::regular("Atlas Full"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
@@ -182,10 +182,10 @@ fn more_entities(world: &mut World) {
       Texture::regular("Atlas 0"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
@@ -203,10 +203,10 @@ fn requests(renderer: &mut Renderer) {
       Texture::regular("Atlas 1"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
@@ -220,10 +220,10 @@ fn requests(renderer: &mut Renderer) {
       Texture::regular("Atlas 2"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
@@ -231,23 +231,23 @@ fn requests(renderer: &mut Renderer) {
   ));
   // Small atlas subtexture renderable.
   renderer.add_render_request((
-    Transform::new([288.0, 96.0], [64.0, 64.0]),
+    Transform::new([320.0, 128.0], [64.0, 64.0]),
     Renderable::new(
       Color::none(),
       Texture::regular("Atlas 3"),
       Mesh::new(
         vec![
-          Point::new(-0.5, -0.5),
-          Point::new(0.5, -0.5),
-          Point::new(0.5, 0.5),
-          Point::new(-0.5, 0.5),
+          Point::new(0.0, 0.0),
+          Point::new(1.0, 0.0),
+          Point::new(1.0, 1.0),
+          Point::new(0.0, 1.0),
         ],
         vec![0, 2, 1, 0, 3, 2],
       ),
     ),
   ));
   // A blue point.
-  renderer.add_render_request(Geometry::point([0.0, 0.0], Color::blue()));
+  renderer.add_render_request(RenderRequest::point([0.0, 0.0], Color::blue()));
 }
 
 fn main() -> Result<(), EngineError> {

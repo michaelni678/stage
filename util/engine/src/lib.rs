@@ -35,7 +35,7 @@ pub use error::EngineError;
 pub use gfx::{
   color::Color,
   error::GfxError,
-  geometry::Geometry,
+  request::RenderRequest,
   mesh::Mesh,
   pipeline::{Pipeline, PipelineAttributes},
   program::Programs,
