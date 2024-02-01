@@ -27,6 +27,7 @@ impl Mesh {
     // If the vertices are dirty, the indices must be recalculated
     // by triangulating the vertices.
     if self.vertices.is_dirty() {
+      // TODO:
       // At the moment, vertices cannot be changed (otherwise this will
       // panic).
       todo!();
