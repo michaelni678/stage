@@ -1,6 +1,6 @@
 use beyond_engine::{
   include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
-  Color, CommandQueue, Context, EngineError, RenderRequest, LoadScene, Mesh, Point, Renderable,
+  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, Point, RenderRequest, Renderable,
   Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
@@ -161,11 +161,7 @@ fn more_entities(world: &mut World) {
   // Atlas subtexture renderable.
   world.spawn_entity((
     Transform::new([-64.0, 128.0], [128.0, 128.0]),
-    Renderable::new(
-      Color::none(),
-      Texture::regular("Atlas 0"),
-      Mesh::square(),
-    ),
+    Renderable::new(Color::none(), Texture::regular("Atlas 0"), Mesh::square()),
   ));
 }
 
@@ -192,11 +188,7 @@ fn requests(renderer: &mut Renderer) {
   // Small atlas subtexture renderable.
   renderer.add_render_request((
     Transform::new([320.0, 128.0], [64.0, 64.0]),
-    Renderable::new(
-      Color::none(),
-      Texture::regular("Atlas 3"),
-      Mesh::square(),
-    ),
+    Renderable::new(Color::none(), Texture::regular("Atlas 3"), Mesh::square()),
   ));
   // A blue point.
   renderer.add_render_request(RenderRequest::point([0.0, 0.0], Color::blue()));
