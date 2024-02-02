@@ -25,7 +25,7 @@ pub use ctx::Context;
 pub use ecs::{
   actives::Actives,
   component::{
-    components::{Camera, Renderable, Transform},
+    components::{Camera, Renderable, Transform, RigidBody, Collider},
     Component,
   },
   entity::Entity,
@@ -47,7 +47,7 @@ pub use gfx::{
 pub use math::{Matrix4, Point, Scale, AABB, Vector, Size};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
 pub use scene::{Scene, SceneError, Scenes};
-pub use phys::{simulator::Simulator, tree::{CollisionTree, TreeObject}};
+pub use phys::{simulator::Simulator, tree::{CollisionTree, TreeObject, TreeObjectSource}};
 
 /* Re-exports. */
 pub use winit::window::WindowBuilder;

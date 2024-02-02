@@ -39,11 +39,27 @@ impl Mul<Scale> for Point {
   }
 }
 
+impl Add for Point {
+  type Output = Point;
+  #[inline]
+  fn add(self, rhs: Self) -> Self::Output {
+    Self::new(self.x + rhs.x, self.y + rhs.y)
+  }
+}
+
 impl Add<Size> for Point {
   type Output = Point;
   #[inline]
   fn add(self, size: Size) -> Self::Output {
     Point::new(self.x + size.w, self.y + size.h)
+  }
+}
+
+impl Add<Vector> for Point {
+  type Output = Point;
+  #[inline]
+  fn add(self, vector: Vector) -> Self::Output {
+    Point::new(self.x + vector.x, self.y + vector.y)
   }
 }
 

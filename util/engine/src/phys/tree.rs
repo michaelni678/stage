@@ -1,11 +1,11 @@
-use rstar::{RTree, RTreeObject};
+use rstar::{iterators::LocateInEnvelopeIntersecting, Envelope, RTree, RTreeObject};
 use rustc_hash::FxHashMap;
-use crate::{Point, Size, AABB};
+use crate::{Entity, Point, Size, Vector, AABB};
 
 /// A tree of colliders.
 pub struct CollisionTree {
   inner: RTree<TreeObject>,
-  environment_colliders: FxHashMap<u64, TreeObject>,
+  colliders: FxHashMap<u64, TreeObject>,
   next_id: u64,
 }
 
@@ -13,7 +13,7 @@ impl Default for CollisionTree {
   fn default() -> Self {
     Self {
       inner: RTree::new(),
-      environment_colliders: FxHashMap::default(),
+      colliders: FxHashMap::default(),
       next_id: 0,
     }
   }
@@ -30,20 +30,38 @@ impl CollisionTree {
     self.next_id += 1;
     id
   }
-  /// Add an environment collider to the tree.
-  pub fn add_environment_collider(&mut self, position: Point, size: Size) -> u64 {
-    // Generate an id for the environment collider.
+  /// Add a collider to the tree.
+  pub fn add_collider(&mut self, position: Point, size: Size, source: TreeObjectSource) -> u64 {
+    // Generate an id for the collider.
     let id = self.generate_id();
     // Create the tree object.
     let obj = TreeObject {
       position: position,
       size: size,
-      source: TreeObjectSource::Environment,
+      source: source,
     };
-    // Add to the tree and `environment_colliders`.
-    self.environment_colliders.insert(id, obj);
+    // Add to the tree and `colliders`.
+    self.colliders.insert(id, obj);
     self.inner.insert(obj);
     id
+  }
+  /// Broad phase.
+  pub fn broad_phase(
+    &self, 
+    position: Point, 
+    size: Size, 
+    velocity: Vector, 
+    timestep: f32,
+  ) -> LocateInEnvelopeIntersecting<TreeObject> {
+    // Calculate the start and end AABBs. Merge them to create the
+    // broad phase search area.
+    let start = AABB::from_corners(position, position + size);
+    let end = {
+      let min_end = position + velocity * timestep;
+      AABB::from_corners(min_end, min_end + size)
+    };
+    let search = start.merged(&end);
+    self.inner.locate_in_envelope_intersecting(&search)
   }
 }
 
@@ -66,4 +84,7 @@ impl RTreeObject for TreeObject {
 #[derive(Copy, Clone)]
 pub enum TreeObjectSource {
   Environment,
+  Entity {
+    handle: Entity,
+  }
 }

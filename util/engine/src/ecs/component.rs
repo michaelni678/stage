@@ -3,7 +3,7 @@ pub trait Component: Send + Sync {}
 
 /// Component variants.
 pub mod components {
-  use crate::{Color, Component, Matrix4, Mesh, Point, Scale, Texture};
+  use crate::{Color, Component, Matrix4, Mesh, Point, Scale, Size, Texture, Vector};
 
   /// The position and scale of an entity.
   pub struct Transform {
@@ -66,4 +66,38 @@ pub mod components {
   }
 
   impl Component for Camera {}
+
+  /// The rigid body component.
+  pub struct RigidBody {
+    pub velocity: Vector,
+  }
+
+  impl RigidBody {
+    /// Create a new rigid body.
+    pub fn new(velocity: impl Into<Vector>) -> Self {
+      Self {
+        velocity: velocity.into(),
+      }
+    }
+  }
+
+  impl Component for RigidBody {}
+
+  /// The collider component.
+  pub struct Collider {
+    pub offset: Point,
+    pub size: Size,
+  }
+
+  impl Collider {
+    /// Create a new collider.
+    pub fn new(offset: impl Into<Point>, size: impl Into<Size>) -> Self {
+      Self {
+        offset: offset.into(),
+        size: size.into(),
+      }
+    }
+  }
+
+  impl Component for Collider {}
 }
