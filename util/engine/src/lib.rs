@@ -9,8 +9,8 @@ mod error;
 mod gfx;
 mod math;
 mod misc;
-mod scene;
 mod phys;
+mod scene;
 
 /* Exports. */
 pub use app::{
@@ -25,7 +25,7 @@ pub use ctx::Context;
 pub use ecs::{
   actives::Actives,
   component::{
-    components::{Camera, Renderable, Transform, RigidBody, Collider},
+    components::{Camera, Collider, Renderable, RigidBody, Transform},
     Component,
   },
   entity::Entity,
@@ -44,10 +44,14 @@ pub use gfx::{
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
 };
-pub use math::{Matrix4, Point, Scale, AABB, Vector, Size, Ray};
+pub use math::{Matrix4, Point, Ray, Scale, Size, Vector, AABB};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
+pub use phys::{
+  query::*,
+  simulator::Simulator,
+  tree::{CollisionTree, TreeObject, TreeObjectSource},
+};
 pub use scene::{Scene, SceneError, Scenes};
-pub use phys::{simulator::Simulator, tree::{CollisionTree, TreeObject, TreeObjectSource}, query::*};
 
 /* Re-exports. */
 pub use winit::window::WindowBuilder;

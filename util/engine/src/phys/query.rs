@@ -57,13 +57,18 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size) -> Option<Collision> {
 }
 
 /// Query if a moving rect intersects a stationary rect.
-pub fn dynrect_vs_rect(position1: Point, size1: Size, velocity: Vector, position2: Point, size2: Size, timestep: f32) -> Option<Collision> {
+pub fn dynrect_vs_rect(
+  position1: Point,
+  size1: Size,
+  velocity: Vector,
+  position2: Point,
+  size2: Size,
+  timestep: f32,
+) -> Option<Collision> {
   let ray = Ray::new(position1 + size1 / 2.0, velocity * timestep);
   let result = ray_vs_rect(ray, position2 - (size1 / 2.0), size2 + size1);
   match result {
-    Some(ref collision) if collision.contact_time >= 0.0 && collision.contact_time < 1.0 => {
-      result
-    },
+    Some(ref collision) if collision.contact_time >= 0.0 && collision.contact_time < 1.0 => result,
     _ => None,
   }
 }

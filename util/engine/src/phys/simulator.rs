@@ -1,4 +1,7 @@
-use crate::{dynrect_vs_rect, Collider, CollisionTree, Point, Renderer, RigidBody, Size, Transform, TreeObjectSource, World};
+use crate::{
+  dynrect_vs_rect, Collider, CollisionTree, Point, Renderer, RigidBody, Size, Transform,
+  TreeObjectSource, World,
+};
 
 /// Simulates physics.
 #[derive(Default)]
@@ -13,11 +16,13 @@ impl Simulator {
   }
   /// Add an environment collider to the simulator.
   pub fn add_environment_collider(
-    &mut self, 
-    position: impl Into<Point>, 
+    &mut self,
+    position: impl Into<Point>,
     size: impl Into<Size>,
   ) -> u64 {
-    self.tree.add_collider(position.into(), size.into(), TreeObjectSource::Environment)
+    self
+      .tree
+      .add_collider(position.into(), size.into(), TreeObjectSource::Environment)
   }
   /// Execute the simulator.
   pub fn execute(&mut self, world: &mut World, renderer: &mut Renderer, timestep: f32) {
@@ -26,23 +31,27 @@ impl Simulator {
     for (entity, (transform, rigid_body, collider)) in query {
       // Broad phase against tree.
       let broad_phase = self.tree.broad_phase(
-        transform.position + collider.offset, 
-        collider.size, 
-        rigid_body.velocity, 
+        transform.position + collider.offset,
+        collider.size,
+        rigid_body.velocity,
         timestep,
       );
       // Narrow phase against statics returned by the broad phase.
       for static_object in broad_phase {
         if let Some(collision) = dynrect_vs_rect(
-          transform.position + collider.offset, 
-          collider.size, 
-          rigid_body.velocity, 
-          static_object.position, 
-          static_object.size, 
+          transform.position + collider.offset,
+          collider.size,
+          rigid_body.velocity,
+          static_object.position,
+          static_object.size,
           timestep,
         ) {
           // Adjust the velocity.
-          rigid_body.velocity = rigid_body.velocity + collision.contact_normal.component_mul(&rigid_body.velocity.abs()) * (1.0 - collision.contact_time);
+          rigid_body.velocity = rigid_body.velocity
+            + collision
+              .contact_normal
+              .component_mul(&rigid_body.velocity.abs())
+              * (1.0 - collision.contact_time);
         }
       }
       // Narrow phase against other dynamic colliders.
@@ -50,7 +59,11 @@ impl Simulator {
       // Set the new position with the corrected velocity.
       transform.position = transform.position + rigid_body.velocity * timestep;
       // Add the entity to the collision tree temporarily.
-      let id = self.tree.add_collider(transform.position + collider.offset, collider.size, TreeObjectSource::Entity { handle: entity });
+      let id = self.tree.add_collider(
+        transform.position + collider.offset,
+        collider.size,
+        TreeObjectSource::Entity { handle: entity },
+      );
       collider_insertions.push(id);
     }
     self.tree.draw_collider_corners(renderer);

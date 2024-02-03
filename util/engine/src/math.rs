@@ -10,10 +10,7 @@ pub struct Point {
 impl Point {
   /// Create a new point.
   pub fn new(x: f32, y: f32) -> Self {
-    Self {
-      x: x,
-      y: y,
-    }
+    Self { x: x, y: y }
   }
   /// Check if any of the values are NaN.
   pub fn has_nan(&self) -> bool {
@@ -130,10 +127,7 @@ pub struct Size {
 impl Size {
   /// Create a new size.
   pub fn new(w: f32, h: f32) -> Self {
-    Self {
-      w: w,
-      h: h,
-    }
+    Self { w: w, h: h }
   }
 }
 

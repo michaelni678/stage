@@ -1,5 +1,7 @@
 use beyond_engine::{
-  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Collider, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, RigidBody, Scene, Scenes, Texture, Transform, WindowBuilder, ELWT
+  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Collider, Color,
+  CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, RigidBody, Scene,
+  Scenes, Texture, Transform, WindowBuilder, ELWT,
 };
 
 /// An example application.
@@ -59,18 +61,16 @@ impl Scene for ExampleScene {
     // Spawn the active entity.
     let entity = context.world.spawn_entity((
       Transform::new([0.0, 0.0], [128.0, 128.0]),
-      Renderable::new(
-        Color::rgb(1.0, 0.0, 0.0),
-        Texture::none(),
-        Mesh::square(),
-      ),
+      Renderable::new(Color::rgb(1.0, 0.0, 0.0), Texture::none(), Mesh::square()),
       Camera::new([64.0, 64.0]),
       RigidBody::new([0.0, 15.0]),
       Collider::new([0.0, 0.0], [128.0, 128.0]),
     ));
     context.world.actives.set_camera(entity);
     // Add an environment collider.
-    context.simulator.add_environment_collider([0.0, 256.0], [128.0, 128.0]);
+    context
+      .simulator
+      .add_environment_collider([0.0, 256.0], [128.0, 128.0]);
     Ok(())
   }
   fn frame(
@@ -78,14 +78,12 @@ impl Scene for ExampleScene {
     _command_queue: &mut CommandQueue,
     context: &mut Context,
   ) -> Result<(), EngineError> {
-    context.renderer.add_render_request(
-      RenderRequest::square(
-        [0.0, 256.0], 
-        [128.0, 128.0], 
-        Color::green(),
-        Texture::none(),
-      ),
-    );
+    context.renderer.add_render_request(RenderRequest::square(
+      [0.0, 256.0],
+      [128.0, 128.0],
+      Color::green(),
+      Texture::none(),
+    ));
     Ok(())
   }
   fn unload(

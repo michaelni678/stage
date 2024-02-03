@@ -1,7 +1,7 @@
 use beyond_engine::{
   include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
-  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable,
-  Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
+  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, Renderer,
+  Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
 /// An example application.
@@ -101,11 +101,7 @@ impl Scene for ExampleScene {
     // Solid red renderable.
     let entity = context.world.spawn_entity((
       Transform::new([0.0, 0.0], [128.0, 128.0]),
-      Renderable::new(
-        Color::rgb(1.0, 0.0, 0.0),
-        Texture::none(),
-        Mesh::square(),
-      ),
+      Renderable::new(Color::rgb(1.0, 0.0, 0.0), Texture::none(), Mesh::square()),
       Camera::new([0.0, 0.0]),
     ));
     context.world.actives.set_camera(entity);

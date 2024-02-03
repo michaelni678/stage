@@ -1,6 +1,6 @@
+use crate::{Color, Entity, Point, RenderRequest, Renderer, Size, Vector, AABB};
 use rstar::{iterators::LocateInEnvelopeIntersecting, Envelope, RTree, RTreeObject};
 use rustc_hash::FxHashMap;
-use crate::{Color, Entity, Point, RenderRequest, Renderer, Size, Vector, AABB};
 
 /// A tree of colliders.
 pub struct CollisionTree {
@@ -66,10 +66,10 @@ impl CollisionTree {
   }
   /// Broad phase.
   pub fn broad_phase(
-    &self, 
-    position: Point, 
-    size: Size, 
-    velocity: Vector, 
+    &self,
+    position: Point,
+    size: Size,
+    velocity: Vector,
     timestep: f32,
   ) -> LocateInEnvelopeIntersecting<TreeObject> {
     // Calculate the start and end AABBs. Merge them to create the
@@ -103,7 +103,5 @@ impl RTreeObject for TreeObject {
 #[derive(Copy, Clone, PartialEq)]
 pub enum TreeObjectSource {
   Environment,
-  Entity {
-    handle: Entity,
-  }
+  Entity { handle: Entity },
 }
