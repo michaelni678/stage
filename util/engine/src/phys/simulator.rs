@@ -1,5 +1,6 @@
 use crate::{
-  dynrect_vs_rect, Collider, CollisionEvent, CollisionTree, Point, Renderer, RigidBody, Size, Transform, TreeObjectSource, World
+  dynrect_vs_rect, Collider, CollisionEvent, CollisionTree, Point, Renderer, RigidBody, Size,
+  Transform, TreeObjectSource, World,
 };
 
 /// Simulates physics.
@@ -24,7 +25,12 @@ impl Simulator {
       .add_collider(position.into(), size.into(), TreeObjectSource::Environment)
   }
   /// Execute the simulator.
-  pub fn execute(&mut self, world: &mut World, renderer: &mut Renderer, timestep: f32) -> Vec<CollisionEvent> {
+  pub fn execute(
+    &mut self,
+    world: &mut World,
+    renderer: &mut Renderer,
+    timestep: f32,
+  ) -> Vec<CollisionEvent> {
     // Collision events.
     // At the moment, this is just collision events between entities and colliders in the tree.
     let mut collision_events = Vec::with_capacity(0);
@@ -54,9 +60,9 @@ impl Simulator {
         ) {
           // Adjust the velocity.
           rigid_body.velocity += collision
-              .contact_normal
-              .component_mul(&rigid_body.velocity.abs())
-              * (1.0 - collision.contact_time);
+            .contact_normal
+            .component_mul(&rigid_body.velocity.abs())
+            * (1.0 - collision.contact_time);
           // Create the collision event and push it to `collision_events`.
           let collision_event = CollisionEvent {
             source1: source,
@@ -71,11 +77,9 @@ impl Simulator {
       // Set the new position with the corrected velocity.
       transform.position = transform.position + rigid_body.velocity * timestep;
       // Add the entity to the collision tree temporarily.
-      let id = self.tree.add_collider(
-        transform.position + collider.offset,
-        collider.size,
-        source,
-      );
+      let id = self
+        .tree
+        .add_collider(transform.position + collider.offset, collider.size, source);
       collider_insertions.push(id);
       // Apply the acceleration to the velocity.
       rigid_body.velocity += rigid_body.acceleration * timestep;

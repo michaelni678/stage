@@ -1,5 +1,7 @@
 use beyond_engine::{
-  include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, CollisionEvent, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT
+  include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
+  CollisionEvent, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest,
+  Renderable, Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
 /// An example application.

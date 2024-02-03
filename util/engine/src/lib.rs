@@ -49,7 +49,7 @@ pub use misc::{flag::Flag, hash::TypeIdHasher};
 pub use phys::{
   query::*,
   simulator::Simulator,
-  tree::{CollisionTree, TreeObject, TreeObjectSource, CollisionEvent},
+  tree::{CollisionEvent, CollisionTree, TreeObject, TreeObjectSource},
 };
 pub use scene::{Scene, SceneError, Scenes};
 
