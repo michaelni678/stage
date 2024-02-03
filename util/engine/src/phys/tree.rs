@@ -2,7 +2,7 @@ use crate::{Entity, Point, Size, Vector, AABB};
 use rstar::{iterators::LocateInEnvelopeIntersecting, Envelope, RTree, RTreeObject};
 use rustc_hash::FxHashMap;
 
-/// Imports used only by the "show_hitboxes" feature.
+// Imports used only by the "show_hitboxes" feature.
 #[cfg(feature = "show_hitboxes")]
 use crate::{Color, RenderRequest, Renderer};
 
