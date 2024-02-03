@@ -87,13 +87,9 @@ impl Scene for ExampleScene {
   fn postframe(
     &mut self,
     _command_queue: &mut CommandQueue,
-    context: &mut Context,
-    collision_events: Vec<CollisionEvent>,
+    _context: &mut Context,
+    _collision_events: Vec<CollisionEvent>,
   ) -> Result<(), EngineError> {
-    // Draw collision points.
-    for collision_event in collision_events {
-      context.renderer.add_render_request(RenderRequest::point(collision_event.contact_point, Color::blue()))
-    }
     Ok(())
   }
   fn unload(

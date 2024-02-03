@@ -6,7 +6,6 @@ use crate::{Point, Ray, Size, Vector};
 #[derive(Debug)]
 pub struct Collision {
   pub contact_time: f32,
-  pub contact_point: Point,
   pub contact_normal: Vector,
 }
 
@@ -39,8 +38,6 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size) -> Option<Collision> {
   if far_contact_time < 0.0 {
     None?
   }
-  // Contact point.
-  let contact_point = ray.origin + contact_time * ray.direction;
   // Contact normal.
   let contact_normal = if t_near.x > t_near.y {
     Vector::new(-inverse_direction.x.signum(), 0.0)
@@ -51,7 +48,6 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size) -> Option<Collision> {
   };
   Some(Collision {
     contact_time: contact_time,
-    contact_point: contact_point,
     contact_normal: contact_normal,
   })
 }

@@ -62,7 +62,6 @@ impl Simulator {
           let collision_event = CollisionEvent {
             source1: source,
             source2: static_object.source,
-            contact_point: collision.contact_point,
           };
           collision_events.push(collision_event);
         }

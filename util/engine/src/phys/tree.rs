@@ -116,5 +116,4 @@ pub enum TreeObjectSource {
 pub struct CollisionEvent {
   pub source1: TreeObjectSource,
   pub source2: TreeObjectSource,
-  pub contact_point: Point,
 }
