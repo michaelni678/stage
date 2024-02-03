@@ -1,6 +1,6 @@
 use beyond_engine::{
   include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
-  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, Point, RenderRequest, Renderable,
+  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable,
   Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
 };
 
@@ -104,15 +104,7 @@ impl Scene for ExampleScene {
       Renderable::new(
         Color::rgb(1.0, 0.0, 0.0),
         Texture::none(),
-        Mesh::new(
-          vec![
-            Point::new(0.0, 0.0),
-            Point::new(1.0, 0.0),
-            Point::new(1.0, 1.0),
-            Point::new(0.0, 1.0),
-          ],
-          vec![0, 2, 1, 0, 3, 2],
-        ),
+        Mesh::square(),
       ),
       Camera::new([0.0, 0.0]),
     ));

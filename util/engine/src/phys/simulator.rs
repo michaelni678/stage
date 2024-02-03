@@ -1,4 +1,4 @@
-use crate::{dynrect_vs_rect, ray_vs_rect, Collider, CollisionTree, Point, Ray, RigidBody, Size, Transform, TreeObjectSource, World};
+use crate::{dynrect_vs_rect, Collider, CollisionTree, Point, RigidBody, Size, Transform, TreeObjectSource, World};
 
 /// Simulates physics.
 #[derive(Default)]
@@ -52,6 +52,10 @@ impl Simulator {
       // Add the entity to the collision tree temporarily.
       let id = self.tree.add_collider(transform.position, collider.size, TreeObjectSource::Entity { handle: entity });
       collider_insertions.push(id);
+    }
+    // Remove the insertions.
+    for id in collider_insertions {
+      self.tree.remove_collider(id);
     }
   }
 }

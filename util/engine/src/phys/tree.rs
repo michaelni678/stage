@@ -45,6 +45,14 @@ impl CollisionTree {
     self.inner.insert(obj);
     id
   }
+  /// Remove a collider from the tree.
+  pub fn remove_collider(&mut self, id: u64) -> Option<TreeObject> {
+    let obj = self.colliders.remove(&id);
+    if let Some(ref obj) = obj {
+      self.inner.remove(obj);
+    }
+    obj
+  }
   /// Broad phase.
   pub fn broad_phase(
     &self, 
@@ -66,7 +74,7 @@ impl CollisionTree {
 }
 
 /// An object that is insertable into the collision tree.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq)]
 pub struct TreeObject {
   pub position: Point,
   pub size: Size,
@@ -81,7 +89,7 @@ impl RTreeObject for TreeObject {
 }
 
 /// Tree object source.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum TreeObjectSource {
   Environment,
   Entity {

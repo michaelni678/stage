@@ -111,6 +111,20 @@ impl Size {
   }
 }
 
+impl Into<[f32; 2]> for Size {
+  #[inline]
+  fn into(self) -> [f32; 2] {
+    [self.w, self.h]
+  }
+}
+
+impl From<[f32; 2]> for Size {
+  #[inline]
+  fn from([x, y]: [f32; 2]) -> Self {
+    Self::new(x, y)
+  }
+}
+
 impl Div<f32> for Size {
   type Output = Size;
   #[inline]
