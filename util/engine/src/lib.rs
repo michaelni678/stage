@@ -44,10 +44,10 @@ pub use gfx::{
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
 };
-pub use math::{Matrix4, Point, Scale, AABB, Vector, Size};
+pub use math::{Matrix4, Point, Scale, AABB, Vector, Size, Ray};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
 pub use scene::{Scene, SceneError, Scenes};
-pub use phys::{simulator::Simulator, tree::{CollisionTree, TreeObject, TreeObjectSource}};
+pub use phys::{simulator::Simulator, tree::{CollisionTree, TreeObject, TreeObjectSource}, query::*};
 
 /* Re-exports. */
 pub use winit::window::WindowBuilder;

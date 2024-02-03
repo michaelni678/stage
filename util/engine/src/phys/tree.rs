@@ -68,9 +68,9 @@ impl CollisionTree {
 /// An object that is insertable into the collision tree.
 #[derive(Copy, Clone)]
 pub struct TreeObject {
-  position: Point,
-  size: Size,
-  source: TreeObjectSource,
+  pub position: Point,
+  pub size: Size,
+  pub source: TreeObjectSource,
 }
 
 impl RTreeObject for TreeObject {

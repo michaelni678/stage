@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul};
+use std::ops::{Add, Div, Mul};
 
 /// A point in 2-D space.
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -95,10 +95,10 @@ pub type Vector = nalgebra::Vector2<f32>;
 pub type Matrix4 = nalgebra::Matrix4<f32>;
 
 /// A size.
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy, Default)]
 pub struct Size {
-  w: f32,
-  h: f32,
+  pub w: f32,
+  pub h: f32,
 }
 
 impl Size {
@@ -111,5 +111,29 @@ impl Size {
   }
 }
 
+impl Div<f32> for Size {
+  type Output = Size;
+  #[inline]
+  fn div(self, rhs: f32) -> Self::Output {
+    Self::new(self.w / rhs, self.h / rhs)
+  }
+}
+
 /// An axis-aligned bounding box.
 pub type AABB = rstar::AABB<Point>;
+
+/// A ray.
+pub struct Ray {
+  pub origin: Point,
+  pub direction: Vector,
+}
+
+impl Ray {
+  /// Create a new ray.
+  pub fn new(origin: impl Into<Point>, direction: impl Into<Vector>) -> Self {
+    Self {
+      origin: origin.into(),
+      direction: direction.into(),
+    }
+  }
+}

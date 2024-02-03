@@ -1,4 +1,4 @@
-use crate::{Collider, CollisionTree, Point, RigidBody, Size, Transform, TreeObjectSource, World};
+use crate::{dynrect_vs_rect, ray_vs_rect, Collider, CollisionTree, Point, Ray, RigidBody, Size, Transform, TreeObjectSource, World};
 
 /// Simulates physics.
 #[derive(Default)]
@@ -32,7 +32,19 @@ impl Simulator {
         timestep,
       );
       // Narrow phase against statics returned by the broad phase.
-
+      for static_object in broad_phase {
+        if let Some(collision) = dynrect_vs_rect(
+          transform.position + collider.offset, 
+          collider.size, 
+          rigid_body.velocity, 
+          static_object.position, 
+          static_object.size, 
+          timestep,
+        ) {
+          // Adjust the velocity.
+          rigid_body.velocity = rigid_body.velocity + collision.contact_normal.component_mul(&rigid_body.velocity.abs()) * (1.0 - collision.contact_time);
+        }
+      }
       // Narrow phase against other dynamic colliders.
 
       // Set the new position with the corrected velocity.
