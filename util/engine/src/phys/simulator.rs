@@ -1,4 +1,4 @@
-use crate::{dynrect_vs_rect, Collider, CollisionTree, Point, RigidBody, Size, Transform, TreeObjectSource, World};
+use crate::{dynrect_vs_rect, Collider, CollisionTree, Point, Renderer, RigidBody, Size, Transform, TreeObjectSource, World};
 
 /// Simulates physics.
 #[derive(Default)]
@@ -20,7 +20,7 @@ impl Simulator {
     self.tree.add_collider(position.into(), size.into(), TreeObjectSource::Environment)
   }
   /// Execute the simulator.
-  pub fn execute(&mut self, world: &mut World, timestep: f32) {
+  pub fn execute(&mut self, world: &mut World, renderer: &mut Renderer, timestep: f32) {
     let query = world.standard_query::<(&mut Transform, &mut RigidBody, &Collider)>();
     let mut collider_insertions = Vec::new();
     for (entity, (transform, rigid_body, collider)) in query {
@@ -50,9 +50,10 @@ impl Simulator {
       // Set the new position with the corrected velocity.
       transform.position = transform.position + rigid_body.velocity * timestep;
       // Add the entity to the collision tree temporarily.
-      let id = self.tree.add_collider(transform.position, collider.size, TreeObjectSource::Entity { handle: entity });
+      let id = self.tree.add_collider(transform.position + collider.offset, collider.size, TreeObjectSource::Entity { handle: entity });
       collider_insertions.push(id);
     }
+    self.tree.draw_collider_corners(renderer);
     // Remove the insertions.
     for id in collider_insertions {
       self.tree.remove_collider(id);

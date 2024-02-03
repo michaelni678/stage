@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul};
+use std::ops::{Add, Div, Mul, Sub};
 
 /// A point in 2-D space.
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -14,6 +14,10 @@ impl Point {
       x: x,
       y: y,
     }
+  }
+  /// Check if any of the values are NaN.
+  pub fn has_nan(&self) -> bool {
+    self.x.is_nan() || self.y.is_nan()
   }
 }
 
@@ -47,6 +51,14 @@ impl Add for Point {
   }
 }
 
+impl Sub for Point {
+  type Output = Point;
+  #[inline]
+  fn sub(self, rhs: Self) -> Self::Output {
+    Self::new(self.x - rhs.x, self.y - rhs.y)
+  }
+}
+
 impl Add<Size> for Point {
   type Output = Point;
   #[inline]
@@ -60,6 +72,14 @@ impl Add<Vector> for Point {
   #[inline]
   fn add(self, vector: Vector) -> Self::Output {
     Point::new(self.x + vector.x, self.y + vector.y)
+  }
+}
+
+impl Mul<Vector> for Point {
+  type Output = Point;
+  #[inline]
+  fn mul(self, vector: Vector) -> Self::Output {
+    Point::new(self.x * vector.x, self.y * vector.y)
   }
 }
 
@@ -122,6 +142,21 @@ impl From<[f32; 2]> for Size {
   #[inline]
   fn from([x, y]: [f32; 2]) -> Self {
     Self::new(x, y)
+  }
+}
+
+impl Into<Scale> for Size {
+  #[inline]
+  fn into(self) -> Scale {
+    Scale::new(self.w, self.h)
+  }
+}
+
+impl Add for Size {
+  type Output = Size;
+  #[inline]
+  fn add(self, rhs: Self) -> Self::Output {
+    Size::new(self.w + rhs.w, self.h + rhs.h)
   }
 }
 

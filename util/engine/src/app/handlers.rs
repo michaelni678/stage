@@ -58,7 +58,7 @@ pub trait App: AppSetupHandler + AppEventHandler + AppWindowEventHandler {
                   // Execute the scene frame.
                   scene.frame(&mut command_queue, &mut context)?;
                   // Execute the simulator.
-                  context.simulator.execute(&mut context.world, 1.0 / 30.0);
+                  context.simulator.execute(&mut context.world, &mut context.renderer, 1.0 / 30.0);
                   // Execute the renderer.
                   context.renderer.execute(&mut context.world)?;
                 },

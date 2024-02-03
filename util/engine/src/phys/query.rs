@@ -1,3 +1,5 @@
+use std::mem;
+
 use crate::{Point, Ray, Size, Vector};
 
 /// Collision information.
@@ -13,32 +15,40 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size, padding: Option<Size>)
   let inverse_direction = ray.direction.map(|i| i.recip());
   // Unwrap the padding.
   let padding = padding.unwrap_or_default();
-  // Half-extents.
-  let half = size / 2.0;
+  let size = size + padding;
   // Calculate the times.
-  let t_near_x = (position.x - inverse_direction.x.signum() * (half.w + padding.w) - ray.origin.x) * inverse_direction.x;
-  let t_near_y = (position.y - inverse_direction.y.signum() * (half.h + padding.h) - ray.origin.y) * inverse_direction.y;
-  let t_far_x = (position.x + inverse_direction.x.signum() * (half.w + padding.w) - ray.origin.x) * inverse_direction.x;
-  let t_far_y = (position.y + inverse_direction.y.signum() * (half.h + padding.h) - ray.origin.y) * inverse_direction.y;
+  let mut t_near = (position - ray.origin) * inverse_direction;
+  let mut t_far = (position + size - ray.origin) * inverse_direction;
+  // Reject if NaN.
+  if t_near.has_nan() || t_far.has_nan() {
+    None?
+  }
+  // Sort distances.
+  if t_near.x > t_far.x {
+    mem::swap(&mut t_near.x, &mut t_far.x);
+  }
+  if t_near.y > t_far.y {
+    mem::swap(&mut t_near.y, &mut t_far.y);
+  }
   // Early rejection.
-  if t_near_x > t_far_y || t_near_y > t_far_x {
+  if t_near.x > t_far.y || t_near.y > t_far.x {
     None?
   }
-  // Sort the times.
-  let t_near = t_near_x.max(t_near_y);
-  let t_far = t_far_x.min(t_far_y);
-  // Reject if time is out of bounds.
-  if t_near >= 1.0 || t_far <= 0.0 {
+  // Contact time and far contact time.
+  let contact_time = t_near.x.max(t_near.y);
+  let far_contact_time = t_far.x.min(t_far.y);
+  // Reject if ray direction is pointing away from the object.
+  if far_contact_time < 0.0 {
     None?
   }
-  // Contact details.
-  let contact_time = t_near.clamp(0.0, 1.0);
-  let contact_normal = if t_near_x > t_near_y {
+  // Contact point.
+  let contact_point = ray.origin + contact_time * ray.direction;
+  // Contact normal.
+  let contact_normal = if t_near.x > t_near.y {
     Vector::new(-inverse_direction.x.signum(), 0.0)
   } else {
     Vector::new(0.0, -inverse_direction.y.signum())
   };
-  let contact_point = ray.origin + contact_time * ray.direction;
   Some(Collision {
     contact_time: contact_time,
     contact_point: contact_point,

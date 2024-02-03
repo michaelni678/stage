@@ -1,6 +1,6 @@
 use rstar::{iterators::LocateInEnvelopeIntersecting, Envelope, RTree, RTreeObject};
 use rustc_hash::FxHashMap;
-use crate::{Entity, Point, Size, Vector, AABB};
+use crate::{Color, Entity, Point, RenderRequest, Renderer, Size, Vector, AABB};
 
 /// A tree of colliders.
 pub struct CollisionTree {
@@ -52,6 +52,17 @@ impl CollisionTree {
       self.inner.remove(obj);
     }
     obj
+  }
+  /// Draw collider corners.
+  pub fn draw_collider_corners(&self, renderer: &mut Renderer) {
+    for collider in self.colliders.values() {
+      let min = collider.position;
+      let max = min + collider.size;
+      renderer.add_render_request(RenderRequest::point(min, Color::blue()));
+      renderer.add_render_request(RenderRequest::point([max.x, min.y], Color::blue()));
+      renderer.add_render_request(RenderRequest::point(max, Color::blue()));
+      renderer.add_render_request(RenderRequest::point([min.x, max.y], Color::blue()));
+    }
   }
   /// Broad phase.
   pub fn broad_phase(
