@@ -67,6 +67,14 @@ impl Add<Size> for Point {
   }
 }
 
+impl Sub<Size> for Point {
+  type Output = Point;
+  #[inline]
+  fn sub(self, size: Size) -> Self::Output {
+    Point::new(self.x - size.w, self.y - size.h)
+  }
+}
+
 impl Add<Vector> for Point {
   type Output = Point;
   #[inline]

@@ -3,6 +3,7 @@ use std::mem;
 use crate::{Point, Ray, Size, Vector};
 
 /// Collision information.
+#[derive(Debug)]
 pub struct Collision {
   pub contact_time: f32,
   pub contact_point: Point,
@@ -10,12 +11,9 @@ pub struct Collision {
 }
 
 /// Query if a ray intersects a rect.
-pub fn ray_vs_rect(ray: Ray, position: Point, size: Size, padding: Option<Size>) -> Option<Collision> {
+pub fn ray_vs_rect(ray: Ray, position: Point, size: Size) -> Option<Collision> {
   // Inverse the ray.
   let inverse_direction = ray.direction.map(|i| i.recip());
-  // Unwrap the padding.
-  let padding = padding.unwrap_or_default();
-  let size = size + padding;
   // Calculate the times.
   let mut t_near = (position - ray.origin) * inverse_direction;
   let mut t_far = (position + size - ray.origin) * inverse_direction;
@@ -46,8 +44,10 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size, padding: Option<Size>)
   // Contact normal.
   let contact_normal = if t_near.x > t_near.y {
     Vector::new(-inverse_direction.x.signum(), 0.0)
-  } else {
+  } else if t_near.x < t_near.y {
     Vector::new(0.0, -inverse_direction.y.signum())
+  } else {
+    Vector::zeros()
   };
   Some(Collision {
     contact_time: contact_time,
@@ -59,7 +59,7 @@ pub fn ray_vs_rect(ray: Ray, position: Point, size: Size, padding: Option<Size>)
 /// Query if a moving rect intersects a stationary rect.
 pub fn dynrect_vs_rect(position1: Point, size1: Size, velocity: Vector, position2: Point, size2: Size, timestep: f32) -> Option<Collision> {
   let ray = Ray::new(position1 + size1 / 2.0, velocity * timestep);
-  let result = ray_vs_rect(ray, position2, size2, Some(size1 / 2.0));
+  let result = ray_vs_rect(ray, position2 - (size1 / 2.0), size2 + size1);
   match result {
     Some(ref collision) if collision.contact_time >= 0.0 && collision.contact_time < 1.0 => {
       result
