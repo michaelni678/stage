@@ -1,7 +1,5 @@
 use beyond_engine::{
-  include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera,
-  Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, Renderer,
-  Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT,
+  include_wrt_manifest, App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, CollisionEvent, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, Renderer, Scene, Scenes, Texture, Transform, WindowBuilder, World, ELWT
 };
 
 /// An example application.
@@ -115,6 +113,14 @@ impl Scene for ExampleScene {
     context: &mut Context,
   ) -> Result<(), EngineError> {
     requests(&mut context.renderer);
+    Ok(())
+  }
+  fn postframe(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    _context: &mut Context,
+    _collision_events: Vec<CollisionEvent>,
+  ) -> Result<(), EngineError> {
     Ok(())
   }
   fn unload(

@@ -105,8 +105,16 @@ impl RTreeObject for TreeObject {
 }
 
 /// Tree object source.
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub enum TreeObjectSource {
   Environment,
   Entity { handle: Entity },
+}
+
+/// A collision event.
+#[derive(Debug)]
+pub struct CollisionEvent {
+  pub source1: TreeObjectSource,
+  pub source2: TreeObjectSource,
+  pub contact_point: Point,
 }

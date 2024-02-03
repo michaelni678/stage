@@ -1,7 +1,5 @@
 use beyond_engine::{
-  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Collider, Color,
-  CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, RigidBody, Scene,
-  Scenes, Texture, Transform, WindowBuilder, ELWT,
+  App, AppEventHandler, AppSetupHandler, AppWindowEventHandler, Camera, Collider, CollisionEvent, Color, CommandQueue, Context, EngineError, LoadScene, Mesh, RenderRequest, Renderable, RigidBody, Scene, Scenes, Texture, Transform, WindowBuilder, ELWT
 };
 
 /// An example application.
@@ -84,6 +82,18 @@ impl Scene for ExampleScene {
       Color::green(),
       Texture::none(),
     ));
+    Ok(())
+  }
+  fn postframe(
+    &mut self,
+    _command_queue: &mut CommandQueue,
+    context: &mut Context,
+    collision_events: Vec<CollisionEvent>,
+  ) -> Result<(), EngineError> {
+    // Draw collision points.
+    for collision_event in collision_events {
+      context.renderer.add_render_request(RenderRequest::point(collision_event.contact_point, Color::blue()))
+    }
     Ok(())
   }
   fn unload(
