@@ -53,8 +53,7 @@ impl Simulator {
           timestep,
         ) {
           // Adjust the velocity.
-          rigid_body.velocity = rigid_body.velocity
-            + collision
+          rigid_body.velocity += collision
               .contact_normal
               .component_mul(&rigid_body.velocity.abs())
               * (1.0 - collision.contact_time);
@@ -79,7 +78,7 @@ impl Simulator {
       );
       collider_insertions.push(id);
       // Apply the acceleration to the velocity.
-      rigid_body.velocity = rigid_body.velocity + rigid_body.acceleration * timestep;
+      rigid_body.velocity += rigid_body.acceleration * timestep;
     }
     // If enabled, draw the corners of the colliders in the tree.
     #[cfg(feature = "show_hitboxes")]
