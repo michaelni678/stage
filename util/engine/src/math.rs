@@ -21,15 +21,13 @@ impl Point {
   }
 }
 
-impl Into<[f32; 2]> for Point {
-  #[inline]
-  fn into(self) -> [f32; 2] {
-    [self.x, self.y]
+impl From<Point> for [f32; 2] {
+  fn from(point: Point) -> Self {
+    [point.x, point.y]
   }
 }
 
 impl From<[f32; 2]> for Point {
-  #[inline]
   fn from([x, y]: [f32; 2]) -> Self {
     Self::new(x, y)
   }
@@ -139,24 +137,21 @@ impl Size {
   }
 }
 
-impl Into<[f32; 2]> for Size {
-  #[inline]
-  fn into(self) -> [f32; 2] {
-    [self.w, self.h]
+impl From<Size> for [f32; 2] {
+  fn from(size: Size) -> Self {
+    [size.w, size.h]
   }
 }
 
 impl From<[f32; 2]> for Size {
-  #[inline]
   fn from([x, y]: [f32; 2]) -> Self {
     Self::new(x, y)
   }
 }
 
-impl Into<Scale> for Size {
-  #[inline]
-  fn into(self) -> Scale {
-    Scale::new(self.w, self.h)
+impl From<Size> for Scale {
+  fn from(size: Size) -> Self {
+    Self::new(size.w, size.h)
   }
 }
 
