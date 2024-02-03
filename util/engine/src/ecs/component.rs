@@ -69,14 +69,20 @@ pub mod components {
 
   /// The rigid body component.
   pub struct RigidBody {
+    /// The velocity of the rigid body.
     pub velocity: Vector,
+    /// Acceleration of the rigid body.
+    pub acceleration: Vector,
   }
 
   impl RigidBody {
     /// Create a new rigid body.
-    pub fn new(velocity: impl Into<Vector>) -> Self {
+    pub fn new(
+      velocity: impl Into<Vector>,
+    ) -> Self {
       Self {
         velocity: velocity.into(),
+        acceleration: Vector::new(0.0, 9.81),
       }
     }
   }

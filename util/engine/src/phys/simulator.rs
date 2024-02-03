@@ -1,6 +1,5 @@
 use crate::{
-  dynrect_vs_rect, Collider, CollisionTree, Point, Renderer, RigidBody, Size, Transform,
-  TreeObjectSource, World,
+  dynrect_vs_rect, Collider, CollisionTree, Point, Renderer, RigidBody, Size, Transform, TreeObjectSource, World
 };
 
 /// Simulates physics.
@@ -65,6 +64,8 @@ impl Simulator {
         TreeObjectSource::Entity { handle: entity },
       );
       collider_insertions.push(id);
+      // Apply the acceleration to the velocity.
+      rigid_body.velocity = rigid_body.velocity + rigid_body.acceleration * timestep;
     }
     // If enabled, draw the corners of the colliders in the tree.
     #[cfg(feature = "show_hitboxes")]
