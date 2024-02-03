@@ -3,7 +3,7 @@ pub trait Component: Send + Sync {}
 
 /// Component variants.
 pub mod components {
-  use crate::{Color, Component, Matrix4, Mesh, Point, Scale, Texture};
+  use crate::{Color, Component, Matrix4, Mesh, Point, Scale, Size, Texture, Vector};
 
   /// The position and scale of an entity.
   pub struct Transform {
@@ -56,14 +56,52 @@ pub mod components {
     /// Get the projection matrix.
     /// `fbd` is the frame buffer dimensions.
     /// `position` is the position of the entity that holds the camera.
-    pub fn projection(&self, fbd: (u32, u32), position: [f32; 2]) -> [[f32; 4]; 4] {
-      let left = position[0] - (fbd.0 / 2) as f32 + self.offset[0];
-      let right = position[0] + (fbd.0 / 2) as f32 + self.offset[0];
-      let bottom = position[1] + (fbd.1 / 2) as f32 + self.offset[1];
-      let top = position[1] - (fbd.1 / 2) as f32 + self.offset[1];
+    pub fn projection(&self, fbd: (u32, u32), position: Point) -> [[f32; 4]; 4] {
+      let left = position.x - (fbd.0 / 2) as f32 + self.offset[0];
+      let right = position.x + (fbd.0 / 2) as f32 + self.offset[0];
+      let bottom = position.y + (fbd.1 / 2) as f32 + self.offset[1];
+      let top = position.y - (fbd.1 / 2) as f32 + self.offset[1];
       Matrix4::new_orthographic(left, right, bottom, top, -1.0, 1.0).into()
     }
   }
 
   impl Component for Camera {}
+
+  /// The rigid body component.
+  pub struct RigidBody {
+    /// The velocity of the rigid body.
+    pub velocity: Vector,
+    /// Acceleration of the rigid body.
+    pub acceleration: Vector,
+  }
+
+  impl RigidBody {
+    /// Create a new rigid body.
+    pub fn new(velocity: impl Into<Vector>) -> Self {
+      Self {
+        velocity: velocity.into(),
+        acceleration: Vector::new(0.0, 9.81),
+      }
+    }
+  }
+
+  impl Component for RigidBody {}
+
+  /// The collider component.
+  pub struct Collider {
+    pub offset: Point,
+    pub size: Size,
+  }
+
+  impl Collider {
+    /// Create a new collider.
+    pub fn new(offset: impl Into<Point>, size: impl Into<Size>) -> Self {
+      Self {
+        offset: offset.into(),
+        size: size.into(),
+      }
+    }
+  }
+
+  impl Component for Collider {}
 }

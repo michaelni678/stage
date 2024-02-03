@@ -1,4 +1,4 @@
-use crate::{CommandQueue, Context, EngineError, TypeIdHasher};
+use crate::{CollisionEvent, CommandQueue, Context, EngineError, TypeIdHasher};
 use std::{any::TypeId, collections::HashMap, hash::BuildHasherDefault};
 use thiserror::Error;
 
@@ -15,6 +15,13 @@ pub trait Scene: 'static {
     &mut self,
     command_queue: &mut CommandQueue,
     context: &mut Context,
+  ) -> Result<(), EngineError>;
+  /// Invoked at the end of the frame.
+  fn postframe(
+    &mut self,
+    command_queue: &mut CommandQueue,
+    context: &mut Context,
+    collision_events: Vec<CollisionEvent>,
   ) -> Result<(), EngineError>;
   /// Invoked when the scene is unloaded.
   fn unload(

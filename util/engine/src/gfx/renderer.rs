@@ -59,7 +59,7 @@ impl Renderer {
         let active_camera = world.actives.camera()?;
         let (transform, camera) = world.standard_inspect::<(&Transform, &Camera)>(active_camera)?;
         let fbd = self.display.get_framebuffer_dimensions();
-        camera.projection(fbd, transform.position.into())
+        camera.projection(fbd, transform.position)
       };
       // Query the renderables.
       let query = world

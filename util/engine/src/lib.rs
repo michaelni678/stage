@@ -9,6 +9,7 @@ mod error;
 mod gfx;
 mod math;
 mod misc;
+mod phys;
 mod scene;
 
 /* Exports. */
@@ -24,7 +25,7 @@ pub use ctx::Context;
 pub use ecs::{
   actives::Actives,
   component::{
-    components::{Camera, Renderable, Transform},
+    components::{Camera, Collider, Renderable, RigidBody, Transform},
     Component,
   },
   entity::Entity,
@@ -43,8 +44,13 @@ pub use gfx::{
   texture::{Texture, TextureInfo, Textures},
   vertex::Vertex,
 };
-pub use math::{Matrix4, Point, Scale};
+pub use math::{Matrix4, Point, Ray, Scale, Size, Vector, AABB};
 pub use misc::{flag::Flag, hash::TypeIdHasher};
+pub use phys::{
+  query::*,
+  simulator::Simulator,
+  tree::{CollisionEvent, CollisionTree, TreeObject, TreeObjectSource},
+};
 pub use scene::{Scene, SceneError, Scenes};
 
 /* Re-exports. */

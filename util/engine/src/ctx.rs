@@ -1,4 +1,4 @@
-use crate::{Display, EngineError, Renderer, World};
+use crate::{Display, EngineError, Renderer, Simulator, World};
 
 /// Holds a majority of the application's data.
 pub struct Context {
@@ -6,6 +6,8 @@ pub struct Context {
   pub renderer: Renderer,
   /// The world.
   pub world: World,
+  /// The simulator.
+  pub simulator: Simulator,
 }
 
 impl Context {
@@ -14,6 +16,7 @@ impl Context {
     Ok(Self {
       renderer: Renderer::new(display)?,
       world: World::new(),
+      simulator: Simulator::new(),
     })
   }
 }

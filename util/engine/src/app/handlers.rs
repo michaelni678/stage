@@ -57,8 +57,16 @@ pub trait App: AppSetupHandler + AppEventHandler + AppWindowEventHandler {
                   let scene = scenes.loaded()?;
                   // Execute the scene frame.
                   scene.frame(&mut command_queue, &mut context)?;
+                  // Execute the simulator.
+                  let collision_events = context.simulator.execute(
+                    &mut context.world,
+                    &mut context.renderer,
+                    1.0 / 30.0,
+                  );
                   // Execute the renderer.
                   context.renderer.execute(&mut context.world)?;
+                  // Execute the scene postframe.
+                  scene.postframe(&mut command_queue, &mut context, collision_events)?;
                 },
                 // Ignore other window events.
                 _ => (),

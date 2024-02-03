@@ -80,7 +80,7 @@ impl Pipeline {
     for (i, &vertex) in mesh.vertices().iter().enumerate() {
       // Calculate vertex information.
       let vertex_position = {
-        let sv = scale * vertex;
+        let sv = vertex * scale;
         Point::new(position.x + sv.x, position.y + sv.y)
       };
       // Cache the vertex to write to.
