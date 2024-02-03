@@ -66,7 +66,14 @@ impl Simulator {
       );
       collider_insertions.push(id);
     }
-    self.tree.draw_collider_corners(renderer);
+    // If enabled, draw the corners of the colliders in the tree.
+    #[cfg(feature = "show_hitboxes")]
+    {
+      self.tree.draw_collider_corners(renderer);
+    }
+    // This is just to fix linting.
+    // The renderer is only used for the "show_hitboxes" feature.
+    let _ = renderer;
     // Remove the insertions.
     for id in collider_insertions {
       self.tree.remove_collider(id);

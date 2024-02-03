@@ -1,6 +1,10 @@
-use crate::{Color, Entity, Point, RenderRequest, Renderer, Size, Vector, AABB};
+use crate::{Entity, Point, Size, Vector, AABB};
 use rstar::{iterators::LocateInEnvelopeIntersecting, Envelope, RTree, RTreeObject};
 use rustc_hash::FxHashMap;
+
+/// Imports used only by the "show_hitboxes" feature.
+#[cfg(feature = "show_hitboxes")]
+use crate::{Color, RenderRequest, Renderer};
 
 /// A tree of colliders.
 pub struct CollisionTree {
@@ -54,6 +58,7 @@ impl CollisionTree {
     obj
   }
   /// Draw collider corners.
+  #[cfg(feature = "show_hitboxes")]
   pub fn draw_collider_corners(&self, renderer: &mut Renderer) {
     for collider in self.colliders.values() {
       let min = collider.position;
